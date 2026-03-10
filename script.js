@@ -3,7 +3,6 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playSound(type) {
     if (!audioCtx) return;
-    // Check if context is suspended (due to browser policy) and resume it
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
@@ -51,12 +50,14 @@ const levels = [ { name: "مبتدئ", minScore: 0 }, { name: "هاوٍ", minSco
 const POWERUP_COSTS = { '5050': 15, 'nation': 20, 'club': 25, 'hint': 30 };
 const INITIAL_COINS = 100;
 const QUESTION_TIME = 20;
-const CHALLENGE_MODE_DURATION = 60; // 60 seconds for challenge mode
+const CHALLENGE_MODE_DURATION = 60;
 
 // --- Game State ---
-let gameMode = 'normal'; // 'normal' or 'challenge'
+let gameMode = 'normal';
 let currentQuestion = {}, currentInfoIndex = 0, score = 0, potentialPoints = 30, streak = 0, coins = 0;
 let normalHighScore = 0, challengeHighScore = 0;
+let bestStreak = 0;
+let powerupsUsedCount = 0;
 let usedPlayerIndices = [];
 let questionTimer, mainTimer;
 
@@ -79,10 +80,13 @@ const resultTextEl = document.getElementById('result-text');
 const finalScoreEl = document.getElementById('final-score');
 const finalScoreLabel = document.getElementById('final-score-label');
 const restartBtn = document.getElementById('restart-btn');
+const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const highScoreDisplay = document.getElementById('high-score-display');
 const challengeHighScoreDisplay = document.getElementById('challenge-high-score-display');
 const highScoreEndDisplay = document.getElementById('high-score-end-display');
 const challengeHighScoreEndDisplay = document.getElementById('challenge-high-score-end-display');
+const bestStreakDisplay = document.getElementById('best-streak-display');
+const powerupsUsedDisplay = document.getElementById('powerups-used-display');
 const playerLevelEl = document.getElementById('player-level');
 const progressBarEl = document.getElementById('progress-bar');
 const timerBar = document.getElementById('timer-bar');
@@ -108,6 +112,8 @@ function startGame(mode) {
     score = 0;
     streak = 0;
     coins = INITIAL_COINS;
+    bestStreak = 0;
+    powerupsUsedCount = 0;
     usedPlayerIndices = [];
     
     startScreen.classList.add('hidden');
@@ -153,7 +159,7 @@ function endGame() {
             normalHighScore = score;
             localStorage.setItem('knowThePlayerNormalHighScore', normalHighScore);
         }
-    } else { // challenge mode
+    } else {
         if (score > challengeHighScore) {
             challengeHighScore = score;
             localStorage.setItem('knowThePlayerChallengeHighScore', challengeHighScore);
@@ -164,6 +170,8 @@ function endGame() {
     finalScoreEl.textContent = score;
     highScoreEndDisplay.textContent = normalHighScore;
     challengeHighScoreEndDisplay.textContent = challengeHighScore;
+    bestStreakDisplay.textContent = bestStreak;
+    powerupsUsedDisplay.textContent = powerupsUsedCount;
     
     gameContainer.classList.add('hidden');
     endScreen.classList.remove('hidden');
@@ -239,14 +247,17 @@ function checkAnswer(selectedChoice) {
     
     if (isCorrect) {
         playSound('correct');
+        streak++;
+        if (streak > bestStreak) {
+            bestStreak = streak;
+        }
         let earnedCoins = Math.floor(potentialPoints / 10);
         if (gameMode === 'normal') {
             score += potentialPoints;
         } else {
-            score++; // In challenge mode, score is number of correct answers
+            score++;
         }
         coins += earnedCoins;
-        streak++;
         let resultMsg = `إجابة صحيحة!`;
         if (gameMode === 'normal') resultMsg += ` +${potentialPoints} نقطة`;
         resultMsg += ` | +${earnedCoins} عملة`;
@@ -312,6 +323,7 @@ Object.entries(powerups).forEach(([key, btn]) => {
         const cost = POWERUP_COSTS[key];
         if (coins >= cost) {
             coins -= cost;
+            powerupsUsedCount++;
             btn.disabled = true;
             switch (key) {
                 case '5050':
@@ -336,14 +348,13 @@ Object.entries(powerups).forEach(([key, btn]) => {
 
 startNormalBtn.addEventListener('click', () => startGame('normal'));
 startChallengeBtn.addEventListener('click', () => startGame('challenge'));
-restartBtn.addEventListener('click', initGame);
+restartBtn.addEventListener('click', () => startGame(gameMode)); // Modified to restart the same mode
+backToMenuBtn.addEventListener('click', initGame);
 
 // Add click sound to all buttons
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => playSound('click'));
 });
 
-
 // --- Initial Load ---
 initGame();
-
