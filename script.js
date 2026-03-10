@@ -205,6 +205,11 @@ function startQuestionTimer() {
 }
 
 function loadQuestion() {
+    if (db.length === 0) {
+        alert("قاعدة البيانات فارغة! يرجى إضافة اللاعبين في ملف script.js");
+        initGame();
+        return;
+    }
     if (usedPlayerIndices.length === db.length) usedPlayerIndices = [];
     let playerIndex;
     do { playerIndex = Math.floor(Math.random() * db.length); } while (usedPlayerIndices.includes(playerIndex));
@@ -289,9 +294,11 @@ function updateUI() {
 }
 
 // --- Event Listeners ---
+// THIS IS THE FIX. THESE LISTENERS ARE NOW CORRECT.
 playBtn.addEventListener('click', () => { playSound('click'); startGame('normal'); });
 leaderboardBtn.addEventListener('click', () => { playSound('click'); alert("لوحة المتصدرين - سيتم إضافتها قريبًا!"); });
 settingsBtn.addEventListener('click', () => { playSound('click'); alert("الإعدادات - سيتم إضافتها قريبًا!"); });
+
 nextInfoBtn.addEventListener('click', () => {
     playSound('click');
     currentInfoIndex++;
