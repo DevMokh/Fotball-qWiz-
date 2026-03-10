@@ -1,20 +1,14 @@
 // --- Audio Context for Sounds ---
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
 function playSound(type) {
     if (!audioCtx) return;
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
-    
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     oscillator.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-
     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
     gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.01);
-
     if (type === 'correct') {
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
@@ -28,12 +22,10 @@ function playSound(type) {
         oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
         gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
     }
-
     oscillator.start(audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
     oscillator.stop(audioCtx.currentTime + 0.2);
 }
-
 
 // --- Database ---
 const db = [    { name: "ليونيل ميسي", infos: ["فزت بالكرة الذهبية 8 مرات.", "فزت بكأس العالم 2022 مع الأرجنتين.", "أنا الهداف التاريخي لنادي برشلونة."], nationality: "الأرجنتين", mainClub: "برشلونة" },
@@ -102,21 +94,16 @@ const QUESTION_TIME = 20;
 const CHALLENGE_MODE_DURATION = 60;
 
 // --- Game State ---
-let gameMode = 'normal';
-let currentQuestion = {}, currentInfoIndex = 0, score = 0, potentialPoints = 30, streak = 0, cash = 0;
-let normalHighScore = 0, challengeHighScore = 0;
-let bestStreak = 0;
-let powerupsUsedCount = 0;
-let usedPlayerIndices = [];
-let questionTimer, mainTimer;
+let gameMode = 'normal', currentQuestion = {}, currentInfoIndex = 0, score = 0, potentialPoints = 30, streak = 0, cash = 0;
+let normalHighScore = 0, challengeHighScore = 0, bestStreak = 0, powerupsUsedCount = 0, usedPlayerIndices = [], questionTimer, mainTimer;
 
 // --- DOM Elements ---
 const startScreen = document.getElementById('start-screen');
 const gameContainer = document.getElementById('game-container');
 const endScreen = document.getElementById('end-screen');
-const playBtn = document.getElementById('play-btn'); // This is now the play-card
-const leaderboardBtn = document.getElementById('leaderboard-btn'); // This is now an icon-card
-const settingsBtn = document.getElementById('settings-btn'); // This is now an icon-card
+const playBtn = document.getElementById('play-btn');
+const leaderboardBtn = document.getElementById('leaderboard-btn');
+const settingsBtn = document.getElementById('settings-btn');
 const gameModeDisplay = document.getElementById('game-mode-display');
 const mainTimerDisplay = document.getElementById('main-timer-display');
 const scoreDisplay = document.getElementById('score-display');
@@ -147,7 +134,6 @@ const powerups = {
 function initGame() {
     normalHighScore = localStorage.getItem('knowThePlayerNormalHighScore') || 0;
     challengeHighScore = localStorage.getItem('knowThePlayerChallengeHighScore') || 0;
-    
     startScreen.classList.remove('hidden');
     gameContainer.classList.add('hidden');
     endScreen.classList.add('hidden');
@@ -155,17 +141,10 @@ function initGame() {
 
 function startGame(mode) {
     gameMode = mode;
-    score = 0;
-    streak = 0;
-    cash = INITIAL_CASH;
-    bestStreak = 0;
-    powerupsUsedCount = 0;
-    usedPlayerIndices = [];
-    
+    score = 0; streak = 0; cash = INITIAL_CASH; bestStreak = 0; powerupsUsedCount = 0; usedPlayerIndices = [];
     startScreen.classList.add('hidden');
     endScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
-
     if (gameMode === 'challenge') {
         startMainTimer();
         gameModeDisplay.textContent = "تحدي الـ 60 ثانية";
@@ -177,7 +156,6 @@ function startGame(mode) {
         playerLevelEl.style.display = 'block';
         progressBarEl.parentElement.style.display = 'block';
     }
-    
     loadQuestion();
 }
 
@@ -188,37 +166,23 @@ function startMainTimer() {
     mainTimer = setInterval(() => {
         timeLeft--;
         mainTimerDisplay.textContent = `الوقت: ${timeLeft}`;
-        if (timeLeft <= 0) {
-            clearInterval(mainTimer);
-            clearInterval(questionTimer);
-            endGame();
-        }
+        if (timeLeft <= 0) { clearInterval(mainTimer); clearInterval(questionTimer); endGame(); }
     }, 1000);
 }
 
 function endGame() {
-    clearInterval(mainTimer);
-    clearInterval(questionTimer);
-
+    clearInterval(mainTimer); clearInterval(questionTimer);
     if (gameMode === 'normal') {
-        if (score > normalHighScore) {
-            normalHighScore = score;
-            localStorage.setItem('knowThePlayerNormalHighScore', normalHighScore);
-        }
+        if (score > normalHighScore) { normalHighScore = score; localStorage.setItem('knowThePlayerNormalHighScore', normalHighScore); }
     } else {
-        if (score > challengeHighScore) {
-            challengeHighScore = score;
-            localStorage.setItem('knowThePlayerChallengeHighScore', challengeHighScore);
-        }
+        if (score > challengeHighScore) { challengeHighScore = score; localStorage.setItem('knowThePlayerChallengeHighScore', challengeHighScore); }
     }
-    
     finalScoreLabel.textContent = gameMode === 'normal' ? "نتيجتك النهائية:" : "الأسئلة الصحيحة:";
     finalScoreEl.textContent = score;
     highScoreEndDisplay.textContent = normalHighScore;
     challengeHighScoreEndDisplay.textContent = challengeHighScore;
     bestStreakDisplay.textContent = bestStreak;
     powerupsUsedDisplay.textContent = powerupsUsedCount;
-    
     gameContainer.classList.add('hidden');
     endScreen.classList.remove('hidden');
 }
@@ -227,24 +191,16 @@ function startQuestionTimer() {
     clearInterval(questionTimer);
     timerBar.style.transition = 'none';
     timerBar.style.width = '100%';
-    
     setTimeout(() => {
         timerBar.style.transition = `width ${QUESTION_TIME}s linear`;
         timerBar.style.width = '0%';
     }, 100);
-
     questionTimer = setInterval(() => {
-        if (gameMode === 'normal') {
-            clearInterval(questionTimer);
-            playSound('wrong');
-            showResult(false, `انتهى الوقت! اللاعب هو: ${currentQuestion.name}`);
-            setTimeout(() => { resultOverlayEl.style.display = 'none'; endGame(); }, 2500);
-        } else {
-            clearInterval(questionTimer);
-            playSound('wrong');
-            showResult(false, `انتهى الوقت!`);
-            setTimeout(() => { resultOverlayEl.style.display = 'none'; loadQuestion(); }, 2000);
-        }
+        clearInterval(questionTimer);
+        playSound('wrong');
+        const msg = gameMode === 'normal' ? `انتهى الوقت! اللاعب هو: ${currentQuestion.name}` : `انتهى الوقت!`;
+        showResult(false, msg);
+        setTimeout(() => { resultOverlayEl.style.display = 'none'; gameMode === 'normal' ? endGame() : loadQuestion(); }, gameMode === 'normal' ? 2500 : 2000);
     }, QUESTION_TIME * 1000);
 }
 
@@ -254,7 +210,6 @@ function loadQuestion() {
     do { playerIndex = Math.floor(Math.random() * db.length); } while (usedPlayerIndices.includes(playerIndex));
     usedPlayerIndices.push(playerIndex);
     currentQuestion = db[playerIndex];
-    
     resetQuestionUI();
     displayInfo();
     createChoices();
@@ -262,11 +217,7 @@ function loadQuestion() {
 }
 
 function resetQuestionUI() {
-    currentInfoIndex = 0;
-    potentialPoints = 30;
-    infoBoxEl.innerHTML = '';
-    choicesEl.innerHTML = '';
-    nextInfoBtn.disabled = false;
+    currentInfoIndex = 0; potentialPoints = 30; infoBoxEl.innerHTML = ''; choicesEl.innerHTML = ''; nextInfoBtn.disabled = false;
     Object.values(powerups).forEach(btn => btn.disabled = false);
     updateUI();
 }
@@ -283,8 +234,7 @@ function createChoices() {
     const otherPlayers = db.filter(player => player.name !== currentQuestion.name);
     while (choices.length < 3 && otherPlayers.length > 0) {
         const randomIndex = Math.floor(Math.random() * otherPlayers.length);
-        const decoy = otherPlayers.splice(randomIndex, 1)[0].name;
-        choices.push(decoy);
+        choices.push(otherPlayers.splice(randomIndex, 1)[0].name);
     }
     choices.sort(() => Math.random() - 0.5);
     choicesEl.innerHTML = '';
@@ -298,37 +248,25 @@ function createChoices() {
 
 function checkAnswer(selectedChoice) {
     clearInterval(questionTimer);
-    let isCorrect = selectedChoice === currentQuestion.name;
-    
+    const isCorrect = selectedChoice === currentQuestion.name;
     if (isCorrect) {
         playSound('correct');
         streak++;
-        if (streak > bestStreak) {
-            bestStreak = streak;
-        }
-        let earnedCash = Math.floor(potentialPoints / 10);
-        if (gameMode === 'normal') {
-            score += potentialPoints;
-        } else {
-            score++;
-        }
+        if (streak > bestStreak) { bestStreak = streak; }
+        const earnedCash = Math.floor(potentialPoints / 10);
+        if (gameMode === 'normal') { score += potentialPoints; } else { score++; }
         cash += earnedCash;
         let resultMsg = `إجابة صحيحة!`;
         if (gameMode === 'normal') resultMsg += ` +${potentialPoints} نقطة`;
         resultMsg += ` | +${earnedCash} نقود`;
-        
         showResult(true, resultMsg);
         setTimeout(() => { resultOverlayEl.style.display = 'none'; loadQuestion(); }, 1500);
     } else {
         playSound('wrong');
         streak = 0;
-        if (gameMode === 'normal') {
-            showResult(false, `إجابة خاطئة! اللاعب هو: ${currentQuestion.name}`);
-            setTimeout(() => { resultOverlayEl.style.display = 'none'; endGame(); }, 2500);
-        } else {
-            showResult(false, `إجابة خاطئة!`);
-            setTimeout(() => { resultOverlayEl.style.display = 'none'; loadQuestion(); }, 1500);
-        }
+        const msg = gameMode === 'normal' ? `إجابة خاطئة! اللاعب هو: ${currentQuestion.name}` : `إجابة خاطئة!`;
+        showResult(false, msg);
+        setTimeout(() => { resultOverlayEl.style.display = 'none'; gameMode === 'normal' ? endGame() : loadQuestion(); }, gameMode === 'normal' ? 2500 : 1500);
     }
 }
 
@@ -341,48 +279,19 @@ function showResult(isCorrect, text) {
 function updateUI() {
     scoreDisplay.textContent = `🏆 ${score}`;
     cashDisplay.textContent = `💲 ${cash}`;
-    
-    Object.entries(powerups).forEach(([key, btn]) => {
-        if (!btn.disabled) {
-            btn.disabled = cash < POWERUP_COSTS[key];
-        }
-    });
-    
+    Object.entries(powerups).forEach(([key, btn]) => { if (!btn.disabled) { btn.disabled = cash < POWERUP_COSTS[key]; } });
     if (gameMode === 'normal') {
         let currentLevel = levels.filter(l => score >= l.minScore).pop() || levels[0];
         let nextLevel = levels[levels.indexOf(currentLevel) + 1];
         playerLevelEl.textContent = currentLevel.name;
-        if (nextLevel) {
-            let scoreInLevel = score - currentLevel.minScore;
-            let levelScoreRange = nextLevel.minScore - currentLevel.minScore;
-            progressBarEl.style.width = `${(scoreInLevel / levelScoreRange) * 100}%`;
-        } else {
-            progressBarEl.style.width = '100%';
-        }
+        progressBarEl.style.width = nextLevel ? `${((score - currentLevel.minScore) / (nextLevel.minScore - currentLevel.minScore)) * 100}%` : '100%';
     }
 }
 
 // --- Event Listeners ---
-// This section is now CORRECT and will make the cards clickable
-
-playBtn.addEventListener('click', () => {
-    playSound('click');
-    // For now, we will add a simple choice later.
-    // Let's default to 'normal' mode.
-    startGame('normal');
-});
-
-leaderboardBtn.addEventListener('click', () => {
-    playSound('click');
-    alert("لوحة المتصدرين - سيتم إضافتها قريبًا!");
-});
-
-settingsBtn.addEventListener('click', () => {
-    playSound('click');
-    alert("الإعدادات - سيتم إضافتها قريبًا!");
-});
-
-
+playBtn.addEventListener('click', () => { playSound('click'); startGame('normal'); });
+leaderboardBtn.addEventListener('click', () => { playSound('click'); alert("لوحة المتصدرين - سيتم إضافتها قريبًا!"); });
+settingsBtn.addEventListener('click', () => { playSound('click'); alert("الإعدادات - سيتم إضافتها قريبًا!"); });
 nextInfoBtn.addEventListener('click', () => {
     playSound('click');
     currentInfoIndex++;
@@ -390,68 +299,42 @@ nextInfoBtn.addEventListener('click', () => {
         displayInfo();
         potentialPoints = (currentInfoIndex === 1) ? 20 : 10;
         updateUI();
-        if (currentInfoIndex === 2) nextInfoBtn.disabled = true;
+        if (currentInfoIndex === 2) { nextInfoBtn.disabled = true; }
     }
 });
-
 Object.entries(powerups).forEach(([key, btn]) => {
     btn.addEventListener('click', () => {
         const cost = POWERUP_COSTS[key];
         if (btn.disabled && cash < cost) return;
-
         if (cash >= cost) {
             playSound('click');
-            cash -= cost;
-            powerupsUsedCount++;
-            btn.disabled = true;
-
+            cash -= cost; powerupsUsedCount++; btn.disabled = true;
             switch (key) {
                 case '5050':
-                    const buttons = Array.from(choicesEl.children);
-                    const wrongChoice = buttons.find(b => !b.disabled && b.textContent !== currentQuestion.name);
-                    if(wrongChoice) wrongChoice.disabled = true;
+                    const wrongChoice = Array.from(choicesEl.children).find(b => !b.disabled && b.textContent !== currentQuestion.name);
+                    if (wrongChoice) wrongChoice.disabled = true;
                     break;
-                case 'nation':
-                    displayInfo(`<b>تلميح:</b> جنسية اللاعب هي ${currentQuestion.nationality}`);
-                    break;
-                case 'club':
-                    displayInfo(`<b>تلميح:</b> من أبرز الأندية التي لعب لها ${currentQuestion.mainClub}`);
-                    break;
-                case 'hint':
-                    displayInfo(`<b>تلميح:</b> اسم اللاعب يبدأ بحرف '${currentQuestion.name[0]}'`);
-                    break;
+                case 'nation': displayInfo(`<b>تلميح:</b> جنسية اللاعب هي ${currentQuestion.nationality}`); break;
+                case 'club': displayInfo(`<b>تلميح:</b> من أبرز الأندية التي لعب لها ${currentQuestion.mainClub}`); break;
+                case 'hint': displayInfo(`<b>تلميح:</b> اسم اللاعب يبدأ بحرف '${currentQuestion.name[0]}'`); break;
             }
             updateUI();
-
-        } else {
-            playSound('wrong');
-        }
+        } else { playSound('wrong'); }
     });
 });
-
-restartBtn.addEventListener('click', () => startGame(gameMode));
-backToMenuBtn.addEventListener('click', initGame);
-
+restartBtn.addEventListener('click', () => { playSound('click'); startGame(gameMode); });
+backToMenuBtn.addEventListener('click', () => { playSound('click'); initGame(); });
 shareBtn.addEventListener('click', () => {
+    playSound('click');
     const gameUrl = "https://alihhhhyyyyyyyy.github.io/Fotball-qWiz-/";
     const modeText = gameMode === 'normal' ? "الوضع العادي" : "تحدي الـ 60 ثانية";
     const scoreText = gameMode === 'normal' ? `${score} نقطة` : `${score} إجابة صحيحة`;
-
     const shareText = `🏆 لقد حققت ${scoreText} في لعبة "اعرف اللاعب" (${modeText})! \n\nهل يمكنك التفوق عليّ؟ 🤔\n\nالعب الآن: ${gameUrl}`;
-
     navigator.clipboard.writeText(shareText).then(() => {
         shareBtn.textContent = "✅ تم النسخ!";
-        setTimeout(() => {
-            shareBtn.textContent = "🏆 مشاركة النتيجة";
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-        alert("فشل نسخ النتيجة. يرجى النسخ يدويًا.");
-    });
+        setTimeout(() => { shareBtn.textContent = "🏆 مشاركة النتيجة"; }, 2000);
+    }).catch(err => { console.error('Failed to copy: ', err); });
 });
-
-// Remove the old general button click sound listener to avoid double sounds
-// document.querySelectorAll('button').forEach(button => { ... });
 
 // --- Initial Load ---
 initGame();
