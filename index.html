@@ -10,13 +10,13 @@
     <div class="game-wrapper">
         <!-- Start Screen -->
         <div class="start-screen" id="start-screen">
-            <h1>اعرف اللاعب</h1>
-            <p>أعلى نتيجة (الوضع العادي): <span id="high-score-display">0</span></p>
-            <p>أعلى نتيجة (وضع التحدي): <span id="challenge-high-score-display">0</span></p>
-            <div class="mode-selection">
-                <h2>اختر وضع اللعب:</h2>
-                <button class="action-btn" id="start-normal-btn">الوضع العادي</button>
-                <button class="action-btn" id="start-challenge-btn">تحدي الـ 60 ثانية</button>
+            <div class="main-logo">
+                <img src="https://i.imgur.com/w2i9y9k.png" alt="Game Logo">
+            </div>
+            <button class="action-btn play-btn" id="play-btn">▶ Play</button>
+            <div class="main-menu-buttons">
+                <button class="icon-btn" id="leaderboard-btn" title="لوحة المتصدرين">📊</button>
+                <button class="icon-btn" id="settings-btn" title="الإعدادات">⚙️</button>
             </div>
         </div>
 
@@ -27,16 +27,20 @@
                 <div id="main-timer-display" class="main-timer-display"></div>
             </div>
             
+            <!-- New Top Bar -->
+            <div class="top-bar">
+                <div class="resource-display">
+                    <span id="cash-display">💲 0</span>
+                </div>
+                <div class="resource-display">
+                    <span id="score-display">🏆 0</span>
+                </div>
+            </div>
+
             <div class="player-level" id="player-level"></div>
             <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
             
             <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-
-            <div class="header">
-                <span id="score">النقاط: 0</span>
-                <span class="cash-display" id="cash-display">💲 0</span>
-                <span id="potential-points">النقاط: 30</span>
-            </div>
 
             <div class="powerups-container">
                 <button class="powerup-btn" id="powerup-5050" data-cost="15" title="حذف إجابة (15 من النقود)">50/50</button>
@@ -66,6 +70,7 @@
                 <p>أعلى نتيجة (وضع التحدي): <span id="challenge-high-score-end-display">0</span></p>
             </div>
             <button class="action-btn" id="restart-btn">العب مرة أخرى</button>
+            <button class="action-btn" id="share-btn">🏆 مشاركة النتيجة</button>
             <button class="action-btn secondary" id="back-to-menu-btn">القائمة الرئيسية</button>
         </div>
     </div>
