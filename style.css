@@ -54,3 +54,22 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--dark-bg); col
 .end-screen p { font-size: 1.1em; color: var(--text-muted); margin: 10px 0; }
 .final-score-container { margin: 20px 0; }
 .final-score { font-size: 3.5em; font-weight: bold; color: var(--accent-1); }
+
+/* --- Animations --- */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-10px); }
+    20% { transform: translateX(10px); }
+    30% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    50% { transform: translateX(-10px); }
+    60% { transform: translateX(10px); }
+    70% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+    90% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
