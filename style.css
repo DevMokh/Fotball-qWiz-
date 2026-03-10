@@ -1,5 +1,3 @@
-
-/* الصق هذا الكود بالكامل في قسم CSS، سيقوم بتحديث التصميم القديم */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
 
 :root {
@@ -15,25 +13,30 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--dark-bg); col
 .game-container, .start-screen, .end-screen { background-color: var(--container-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 25px 30px; border: 1px solid var(--border-color); animation: fadeIn 0.5s ease-in-out; }
 .hidden { display: none; }
 
-/* --- Timer --- */
+/* --- Start Screen & Mode Selection --- */
+.start-screen p { font-size: 1.1em; color: var(--text-muted); margin: 10px 0; }
+.mode-selection { margin-top: 30px; }
+.mode-selection h2 { margin-bottom: 15px; color: var(--accent-1); }
+#start-challenge-btn { background: linear-gradient(45deg, #e84393, #e17055); }
+
+/* --- Game Header & Timers --- */
+.game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; }
+.game-mode-display { color: var(--accent-2); }
+.main-timer-display { color: var(--timer-color); }
 .timer-container { width: 100%; background-color: var(--dark-bg); border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); }
 .timer-bar { width: 100%; height: 8px; background-color: var(--timer-color); border-radius: 10px; transition: width 1s linear; }
 
-/* --- Header, Progress, Coins --- */
+/* --- Other elements --- */
 .player-level { font-size: 1.1em; font-weight: bold; color: var(--accent-1); margin-bottom: 5px; }
 .progress-bar-container { width: 100%; background-color: var(--dark-bg); border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); }
 .progress-bar { width: 0%; height: 12px; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); border-radius: 10px; transition: width 0.5s ease-out; }
 .header { display: flex; justify-content: space-between; align-items: center; font-size: 1.2em; font-weight: bold; margin-bottom: 15px; color: var(--text-muted); }
 .coins-display { color: var(--gold-color); font-weight: bold; }
-
-/* --- Power-ups --- */
 .powerups-container { display: flex; justify-content: space-around; margin-bottom: 20px; }
 .powerup-btn { position: relative; background-color: var(--powerup-bg); color: var(--text-color); border: 1px solid var(--border-color); width: 55px; height: 55px; border-radius: 50%; font-size: 1.5em; cursor: pointer; transition: all 0.2s ease; }
 .powerup-btn:hover:not(:disabled) { background-color: var(--accent-1); transform: scale(1.1); }
 .powerup-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; background-color: #333; }
 .powerup-btn::after { content: attr(data-cost); position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--gold-color); color: #333; font-size: 0.5em; font-weight: bold; padding: 2px 5px; border-radius: 5px; }
-
-/* --- Other elements (mostly unchanged) --- */
 .info-box { background-color: var(--dark-bg); border-radius: 10px; padding: 20px; margin-bottom: 15px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--border-color); }
 .info-box p { margin: 8px 0; font-size: 1.2em; color: var(--text-color); font-weight: 500; animation: slideInUp 0.4s ease-out; }
 .choices button, .action-btn { width: 100%; padding: 15px; margin-bottom: 10px; font-size: 1.1em; font-weight: bold; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
@@ -47,11 +50,7 @@ body { font-family: 'Tajawal', sans-serif; background-color: var(--dark-bg); col
 .result-overlay.correct { background-color: rgba(0, 180, 106, 0.9); }
 .result-overlay.wrong { background-color: rgba(220, 53, 69, 0.9); }
 .result-text { font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); animation: zoomIn 0.3s; }
-.start-screen h1, .end-screen h1 { color: var(--text-color); margin-top: 0; font-size: 2.5em; }
-.start-screen p, .end-screen p { font-size: 1.2em; color: var(--text-muted); }
+.end-screen h1, .start-screen h1 { color: var(--text-color); margin-top: 0; font-size: 2.5em; }
+.end-screen p { font-size: 1.1em; color: var(--text-muted); margin: 10px 0; }
 .final-score-container { margin: 20px 0; }
 .final-score { font-size: 3.5em; font-weight: bold; color: var(--accent-1); }
-#high-score-display { font-size: 1em; color: var(--gold-color); }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
