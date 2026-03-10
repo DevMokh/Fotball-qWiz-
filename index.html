@@ -27,14 +27,56 @@
 
         <!-- Game Screen -->
         <div class="screen hidden" id="game-container">
-            <!-- ... (محتويات شاشة اللعب لم تتغير) ... -->
+            <div class="game-header">
+                <div id="game-mode-display" class="game-mode-display"></div>
+                <div id="main-timer-display" class="main-timer-display"></div>
+            </div>
+            <div class="top-bar">
+                <div class="resource-display">
+                    <span id="cash-display">💲 0</span>
+                </div>
+                <div class="resource-display">
+                    <span id="score-display">🏆 0</span>
+                </div>
+            </div>
+            <div class="player-level" id="player-level"></div>
+            <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+            <div class="powerups-container">
+                <button class="powerup-btn" id="powerup-5050" data-cost="15" title="حذف إجابة (15 من النقود)">50/50</button>
+                <button class="powerup-btn" id="powerup-nation" data-cost="20" title="كشف الجنسية (20 من النقود)">🌍</button>
+                <button class="powerup-btn" id="powerup-club" data-cost="25" title="كشف النادي (25 من النقود)">👕</button>
+                <button class="powerup-btn" id="powerup-hint" data-cost="30" title="تلميح الحرف (30 من النقود)">A..?</button>
+            </div>
+            <div class="info-box" id="info-box"></div>
+            <button id="next-info-btn" class="action-btn">معلومة إضافية</button>
+            <div class="choices" id="choices"></div>
         </div>
 
         <!-- End Screen -->
         <div class="screen hidden" id="end-screen">
-            <!-- ... (محتويات شاشة النهاية لم تتغير) ... -->
+            <div class="logo-container">
+                 <h1 class="game-title" style="font-size: 2.5em;">انتهت<span class="title-highlight">اللعبة</span></h1>
+                 <div class="title-underline" style="width: 60px;"></div>
+            </div>
+            <div class="final-score-container">
+                <p id="final-score-label">نتيجتك النهائية:</p>
+                <div class="final-score" id="final-score">0</div>
+                <div class="stats-container">
+                    <p class="stats">أطول سلسلة صحيحة: <span id="best-streak-display">0</span></p>
+                    <p class="stats">المساعدات المستخدمة: <span id="powerups-used-display">0</span></p>
+                </div>
+                <p class="highscore-label">أعلى نتيجة (عادي): <span id="high-score-end-display">0</span></p>
+                <p class="highscore-label">أعلى نتيجة (تحدي): <span id="challenge-high-score-end-display">0</span></p>
+            </div>
+            <div class="menu">
+                <button class="menu-btn" id="restart-btn"><span>العب مرة أخرى</span></button>
+                <button class="menu-btn secondary" id="share-btn"><span>🏆 مشاركة النتيجة</span></button>
+                <button class="menu-btn secondary" id="back-to-menu-btn"><span>القائمة الرئيسية</span></button>
+            </div>
         </div>
     </div>
+
     <div class="result-overlay" id="result-overlay"><div class="result-text" id="result-text"></div></div>
     <script src="script.js"></script>
 </body>
