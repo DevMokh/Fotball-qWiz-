@@ -34,15 +34,15 @@
 
             <div class="header">
                 <span id="score">النقاط: 0</span>
-                <span class="coins-display" id="coins-display">💰 100</span>
+                <span class="cash-display" id="cash-display">💲 0</span>
                 <span id="potential-points">النقاط: 30</span>
             </div>
 
             <div class="powerups-container">
-                <button class="powerup-btn" id="powerup-5050" data-cost="15" title="حذف إجابة (15 عملة)">50/50</button>
-                <button class="powerup-btn" id="powerup-nation" data-cost="20" title="كشف الجنسية (20 عملة)">🌍</button>
-                <button class="powerup-btn" id="powerup-club" data-cost="25" title="كشف النادي (25 عملة)">👕</button>
-                <button class="powerup-btn" id="powerup-hint" data-cost="30" title="تلميح الحرف (30 عملة)">A..?</button>
+                <button class="powerup-btn" id="powerup-5050" data-cost="15" title="حذف إجابة (15 من النقود)">50/50</button>
+                <button class="powerup-btn" id="powerup-nation" data-cost="20" title="كشف الجنسية (20 من النقود)">🌍</button>
+                <button class="powerup-btn" id="powerup-club" data-cost="25" title="كشف النادي (25 من النقود)">👕</button>
+                <button class="powerup-btn" id="powerup-hint" data-cost="30" title="تلميح الحرف (30 من النقود)">A..?</button>
             </div>
 
             <div class="info-box" id="info-box"></div>
@@ -56,16 +56,17 @@
             <div class="final-score-container">
                 <p id="final-score-label">نتيجتك النهائية:</p>
                 <div class="final-score" id="final-score">0</div>
-              
-                  <!-- السطران الجديدان يبدآن من هنا -->
-    <p class="stats">أطول سلسلة صحيحة: <span id="best-streak-display">0</span></p>
-    <p class="stats">المساعدات المستخدمة: <span id="powerups-used-display">0</span></p>
-    <!-- نهاية السطرين الجديدين -->
-             
+                
+                <div class="stats-container">
+                    <p class="stats">أطول سلسلة صحيحة: <span id="best-streak-display">0</span></p>
+                    <p class="stats">المساعدات المستخدمة: <span id="powerups-used-display">0</span></p>
+                </div>
+
                 <p>أعلى نتيجة (الوضع العادي): <span id="high-score-end-display">0</span></p>
                 <p>أعلى نتيجة (وضع التحدي): <span id="challenge-high-score-end-display">0</span></p>
             </div>
             <button class="action-btn" id="restart-btn">العب مرة أخرى</button>
+            <button class="action-btn secondary" id="back-to-menu-btn">القائمة الرئيسية</button>
         </div>
     </div>
 
