@@ -1,18 +1,20 @@
-/* --- General Styles --- */
+/* --- General Styles & Stadium Lights Theme --- */
 :root {
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
-    --text-color: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --border-color: #333;
-    --accent-color: #03DAC6;
-    --accent-hover: #36f4e0;
-    --danger-color: #CF6679;
-    --gold-color: #ffd700;
+    --bg-color: #0a0f0b;
+    --primary-surface: #121a13;
+    --secondary-surface: #1a261c;
+    --border-color: #2a3f2d;
+    --text-color: #e8f5e9;
+    --text-muted: #a5d6a7;
+    --accent-color: #fdd835; /* Bright Gold/Yellow */
+    --accent-hover: #fff176;
+    --danger-color: #ef5350;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
+
 body {
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'Cairo', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -21,130 +23,142 @@ body {
     align-items: center;
     min-height: 100vh;
     -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+}
+
+.background-texture {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/dark-grass.png');
+    opacity: 0.1;
+    z-index: -1;
 }
 
 .game-wrapper {
     width: 100%;
     max-width: 400px;
-    background-color: var(--bg-color);
-    border-radius: 20px;
-    padding: 20px;
+    background: var(--primary-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 0 60px rgba(253, 216, 53, 0.1);
     position: relative;
     overflow: hidden;
 }
 
 .hidden { display: none !important; }
 
-/* --- New Card UI for Start Screen --- */
-.start-screen {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* --- Screen Transitions --- */
+.screen {
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.card {
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    transition: background-color 0.2s, transform 0.2s;
-    cursor: pointer;
+/* --- World-Class Main Menu --- */
+#start-screen {
     text-align: center;
-    user-select: none; /* Prevent text selection on click */
 }
 
-.card:hover {
-    background-color: #2a2a2a;
-    transform: translateY(-4px);
+.logo-container {
+    margin-bottom: 60px;
 }
 
-.title-card {
-    cursor: default;
-    transform: none !important;
-    background-color: var(--card-bg) !important;
-}
-
-.title-card h1 {
-    margin: 0;
-    font-size: 2.5em;
+.game-title {
+    font-size: 4em;
+    font-weight: 900;
     color: var(--text-color);
+    margin: 0;
+    letter-spacing: -2px;
 }
 
-.play-card {
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 5em;
+.title-highlight {
     color: var(--accent-color);
 }
 
-.bottom-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.title-underline {
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
 }
 
-.icon-card {
-    height: 80px;
+.menu {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5em;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* --- Game Screen Styles --- */
-.game-container { text-align: center; }
-.end-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
-
-.top-bar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    margin-bottom: 15px;
-}
-.resource-display {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 5px 10px;
+.menu-btn {
+    background: linear-gradient(145deg, var(--secondary-surface), var(--primary-surface));
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 18px;
     border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
-#score-display { color: var(--accent-color); }
-#cash-display { color: var(--gold-color); }
 
-.player-level { font-size: 1.2em; font-weight: bold; color: var(--accent-color); margin-bottom: 5px; }
-.progress-bar-container { width: 100%; background-color: #333; border-radius: 5px; height: 10px; margin-bottom: 15px; }
-.progress-bar { width: 0%; height: 100%; background-color: var(--accent-color); border-radius: 5px; transition: width 0.5s ease-in-out; }
-.timer-container { width: 100%; background-color: #333; border-radius: 5px; height: 8px; margin-bottom: 15px; }
-.timer-bar { width: 100%; height: 100%; background: linear-gradient(to left, var(--accent-color), var(--danger-color)); border-radius: 5px; }
-.info-box { background-color: var(--card-bg); border-radius: 16px; padding: 15px; margin: 15px 0; min-height: 100px; text-align: right; }
-.info-box p { margin: 5px 0; }
-.choices { display: grid; grid-template-columns: 1fr; gap: 10px; }
-.choices button { width: 100%; background-color: #333; color: var(--text-color); padding: 15px; font-size: 1.1em; border: 1px solid #444; border-radius: 12px; }
-.choices button:hover:not(:disabled) { background-color: #4a4a4a; }
-.choices button:disabled { opacity: 0.5; cursor: not-allowed; }
-.powerups-container { display: flex; justify-content: space-around; margin-bottom: 15px; }
-.powerup-btn { background-color: #333; color: var(--text-color); border: 1px solid #444; width: 55px; height: 55px; border-radius: 50%; font-size: 1.5em; }
-.powerup-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-button { font-family: inherit; cursor: pointer; border: none; border-radius: 10px; padding: 12px 20px; font-size: 1em; transition: background-color 0.2s, transform 0.2s; }
-.action-btn { background-color: var(--accent-color); color: #121212; font-weight: bold; margin: 5px; }
-.action-btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
-.action-btn.secondary { background-color: #6c757d; }
-.action-btn.secondary:hover { background-color: #5a6268; }
-#share-btn { background-color: #2980b9; border-color: #2471a3; color: white; }
-#share-btn:hover { background-color: #3498db; }
-.final-score-container { margin: 20px 0; }
-.final-score { font-size: 4em; font-weight: bold; color: var(--accent-color); }
-.stats-container { margin-top: 15px; color: var(--text-muted); }
-.result-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
-.result-text { font-size: 2em; font-weight: bold; padding: 20px; border-radius: 15px; text-align: center; }
-.result-overlay.correct .result-text { color: var(--accent-color); }
-.result-overlay.wrong .result-text { color: var(--danger-color); }
-.fade-in { animation: fadeIn 0.5s; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.menu-btn span {
+    position: relative;
+    z-index: 2;
+}
+
+.menu-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--accent-color) 0%, rgba(253,216,53,0) 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 1;
+    opacity: 0;
+}
+
+.menu-btn:hover::before {
+    width: 300px;
+    height: 300px;
+    opacity: 0.2;
+}
+
+.menu-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.menu-btn.secondary {
+    background: transparent;
+    font-size: 1.2em;
+    padding: 15px;
+}
+
+/* --- (Rest of the CSS for game/end screens can be added here) --- */
+/* This ensures the rest of the game matches the new theme */
+.game-container, .end-screen { text-align: center; }
+.top-bar { display: flex; justify-content: space-around; align-items: center; padding: 10px; background-color: var(--secondary-surface); border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border-color); }
+.resource-display { display: flex; align-items: center; gap: 8px; font-size: 1.2em; font-weight: 700; }
+#score-display { color: var(--accent-color); }
+#cash-display { color: var(--text-muted); }
+.info-box { background-color: var(--secondary-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin: 15px 0; min-height: 100px; text-align: right; }
+.choices button { background-color: var(--secondary-surface); border: 1px solid var(--border-color); color: var(--text-color); padding: 15px; font-size: 1.1em; border-radius: 12px; }
+.choices button:hover:not(:disabled) { background-color: #2a3f2d; border-color: var(--accent-color); }
+.powerup-btn { background-color: var(--secondary-surface); border: 1px solid var(--border-color); color: var(--text-color); width: 55px; height: 55px; border-radius: 50%; font-size: 1.5em; }
+.action-btn { background-color: var(--accent-color); color: #121212; font-weight: bold; margin: 5px; border-radius: 12px; padding: 15px 25px; font-size: 1.2em; }
+.action-btn:hover { background-color: var(--accent-hover); }
+.final-score { font-size: 4em; font-weight: 900; color: var(--accent-color); }
+.result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 15, 11, 0.9); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
+.result-text { font-size: 2.5em; font-weight: 700; text-align: center; }
