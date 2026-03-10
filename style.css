@@ -1,11 +1,11 @@
 /* --- General Styles --- */
 :root {
-    --bg-color: #121212; /* Darker, more modern background */
+    --bg-color: #121212;
     --card-bg: #1e1e1e;
     --text-color: #e0e0e0;
     --text-muted: #a0a0a0;
     --border-color: #333;
-    --accent-color: #03DAC6; /* A modern, vibrant accent color */
+    --accent-color: #03DAC6;
     --accent-hover: #36f4e0;
     --danger-color: #CF6679;
     --gold-color: #ffd700;
@@ -26,10 +26,9 @@ body {
 .game-wrapper {
     width: 100%;
     max-width: 400px;
-    background-color: var(--bg-color); /* Match body background */
+    background-color: var(--bg-color);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: none; /* Remove old shadow */
     position: relative;
     overflow: hidden;
 }
@@ -51,11 +50,18 @@ body {
     transition: background-color 0.2s, transform 0.2s;
     cursor: pointer;
     text-align: center;
+    user-select: none; /* Prevent text selection on click */
 }
 
 .card:hover {
     background-color: #2a2a2a;
     transform: translateY(-4px);
+}
+
+.title-card {
+    cursor: default;
+    transform: none !important;
+    background-color: var(--card-bg) !important;
 }
 
 .title-card h1 {
@@ -87,7 +93,7 @@ body {
     font-size: 2.5em;
 }
 
-/* --- Game Screen Styles (largely unchanged) --- */
+/* --- Game Screen Styles --- */
 .game-container { text-align: center; }
 .end-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
 
@@ -112,8 +118,6 @@ body {
 #score-display { color: var(--accent-color); }
 #cash-display { color: var(--gold-color); }
 
-
-/* --- (Rest of the CSS remains mostly the same) --- */
 .player-level { font-size: 1.2em; font-weight: bold; color: var(--accent-color); margin-bottom: 5px; }
 .progress-bar-container { width: 100%; background-color: #333; border-radius: 5px; height: 10px; margin-bottom: 15px; }
 .progress-bar { width: 0%; height: 100%; background-color: var(--accent-color); border-radius: 5px; transition: width 0.5s ease-in-out; }
