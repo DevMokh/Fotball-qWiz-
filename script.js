@@ -15,39 +15,43 @@ let bestStreak = 0;
 let usedPlayers = [];
 let totalXp = 0;
 let powerupsUsed = 0;
-let timer;
+let gameMode = 'normal';
+let currentDifficulty = 'medium';
+let timer = null;
+let timeLeft = 20;
 
 // إعدادات الصعوبة
 const difficulties = {
-    easy: { time: 30, multiplier: 1, cashMultiplier: 1, infoCount: 1 },
-    medium: { time: 20, multiplier: 1.5, cashMultiplier: 1.2, infoCount: 2 },
-    hard: { time: 15, multiplier: 2, cashMultiplier: 1.5, infoCount: 3 },
-    expert: { time: 10, multiplier: 3, cashMultiplier: 2, infoCount: 4 },
-    legend: { time: 8, multiplier: 5, cashMultiplier: 3, infoCount: 5 }
+    easy: { time: 30, multiplier: 1, cashMultiplier: 1 },
+    medium: { time: 20, multiplier: 1.5, cashMultiplier: 1.2 },
+    hard: { time: 15, multiplier: 2, cashMultiplier: 1.5 },
+    expert: { time: 10, multiplier: 3, cashMultiplier: 2 },
+    legend: { time: 8, multiplier: 5, cashMultiplier: 3 }
 };
 
-let currentDifficulty = 'medium';
-let gameMode = 'normal';
-let timeLeft = 20;
-
-// عناصر DOM
+// عناصر الشاشات
 const startScreen = document.getElementById('start-screen');
+const modeScreen = document.getElementById('mode-screen');
+const difficultyScreen = document.getElementById('difficulty-screen');
 const gameScreen = document.getElementById('game-screen');
 const endScreen = document.getElementById('end-screen');
 const settingsModal = document.getElementById('settings-modal');
 const leaderboardModal = document.getElementById('leaderboard-modal');
+const resultOverlay = document.getElementById('result-overlay');
 
-// أزرار
+// أزرار التنقل
 const playBtn = document.getElementById('play-btn');
-const backBtn = document.getElementById('back-btn');
+const backFromMode = document.getElementById('back-from-mode');
+const backFromDifficulty = document.getElementById('back-from-difficulty');
+const backFromGame = document.getElementById('back-from-game');
+const backToMenu = document.getElementById('back-to-menu');
+const restartBtn = document.getElementById('restart-btn');
+
+// أزرار الإعدادات
 const settingsBtn = document.getElementById('settings-btn');
 const leaderboardBtn = document.getElementById('leaderboard-btn');
 const closeSettings = document.getElementById('close-settings');
 const closeLeaderboard = document.getElementById('close-leaderboard');
-const restartBtn = document.getElementById('restart-btn');
-const menuBtn = document.getElementById('menu-btn');
-const giftBtn = document.getElementById('gift-btn');
-const nextInfoBtn = document.getElementById('next-info-btn');
 const resetData = document.getElementById('reset-data');
 
 // أزرار الأوضاع
@@ -57,52 +61,83 @@ const bossMode = document.getElementById('boss-mode');
 const blindMode = document.getElementById('blind-mode');
 
 // أزرار الصعوبة
-document.querySelectorAll('[data-diff]').forEach(btn => {
-    btn.addEventListener('click', function() {
-        document.querySelectorAll('[data-diff]').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+const diffCards = document.querySelectorAll('[data-diff]');
+
+// أزرار اللعبة
+const nextInfoBtn = document.getElementById('next-info-btn');
+const giftBtn = document.getElementById('gift-btn');
+
+// Power-ups
+const powerup5050 = document.getElementById('powerup-5050');
+const powerupNation = document.getElementById('powerup-nation');
+const powerupClub = document.getElementById('powerup-club');
+const powerupHint = document.getElementById('powerup-hint');
+const powerupSwap = document.getElementById('powerup-swap');
+
+// ========== دوال التنقل بين الشاشات ==========
+function showScreen(screen) {
+    document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+        s.classList.add('hidden');
+    });
+    screen.classList.remove('hidden');
+    screen.classList.add('active');
+}
+
+playBtn.addEventListener('click', function() {
+    showScreen(modeScreen);
+});
+
+backFromMode.addEventListener('click', function() {
+    showScreen(startScreen);
+});
+
+backFromDifficulty.addEventListener('click', function() {
+    showScreen(modeScreen);
+});
+
+backFromGame.addEventListener('click', function() {
+    clearInterval(timer);
+    showScreen(difficultyScreen);
+});
+
+backToMenu.addEventListener('click', function() {
+    showScreen(startScreen);
+});
+
+restartBtn.addEventListener('click', function() {
+    showScreen(modeScreen);
+});
+
+// ========== اختيار الوضع ==========
+normalMode.addEventListener('click', function() {
+    gameMode = 'normal';
+    showScreen(difficultyScreen);
+});
+
+challengeMode.addEventListener('click', function() {
+    gameMode = 'challenge';
+    showScreen(difficultyScreen);
+});
+
+bossMode.addEventListener('click', function() {
+    gameMode = 'boss';
+    showScreen(difficultyScreen);
+});
+
+blindMode.addEventListener('click', function() {
+    gameMode = 'blind';
+    showScreen(difficultyScreen);
+});
+
+// ========== اختيار الصعوبة وبدء اللعبة ==========
+diffCards.forEach(card => {
+    card.addEventListener('click', function() {
         currentDifficulty = this.dataset.diff;
+        startGame();
     });
 });
 
-// أحداث الأزرار
-playBtn.addEventListener('click', startGame);
-backBtn.addEventListener('click', () => {
-    gameScreen.classList.remove('active');
-    gameScreen.classList.add('hidden');
-    startScreen.classList.add('active');
-    startScreen.classList.remove('hidden');
-});
-
-settingsBtn.addEventListener('click', () => {
-    settingsModal.classList.remove('hidden');
-});
-
-leaderboardBtn.addEventListener('click', () => {
-    updateLeaderboard();
-    leaderboardModal.classList.remove('hidden');
-});
-
-closeSettings.addEventListener('click', () => {
-    settingsModal.classList.add('hidden');
-});
-
-closeLeaderboard.addEventListener('click', () => {
-    leaderboardModal.classList.add('hidden');
-});
-
-restartBtn.addEventListener('click', startGame);
-menuBtn.addEventListener('click', () => {
-    endScreen.classList.remove('active');
-    endScreen.classList.add('hidden');
-    startScreen.classList.add('active');
-    startScreen.classList.remove('hidden');
-});
-
-giftBtn.addEventListener('click', claimGift);
-nextInfoBtn.addEventListener('click', nextInfo);
-
-// دوال اللعبة
 function startGame() {
     score = 0;
     streak = 0;
@@ -110,19 +145,16 @@ function startGame() {
     powerupsUsed = 0;
     cash = 100;
     
-    startScreen.classList.remove('active');
-    startScreen.classList.add('hidden');
-    gameScreen.classList.add('active');
-    gameScreen.classList.remove('hidden');
-    
+    showScreen(gameScreen);
     loadQuestion();
     updateDisplay();
 }
 
+// ========== دوال اللعبة ==========
 function loadQuestion() {
     clearInterval(timer);
     
-    // اختيار لاعب
+    // اختيار لاعب عشوائي
     let available = players.filter((p, i) => !usedPlayers.includes(i));
     if (available.length === 0) {
         usedPlayers = [];
@@ -167,46 +199,46 @@ function createChoices() {
     document.getElementById('choices-area').innerHTML = html;
 }
 
-function checkAnswer(answer) {
+window.checkAnswer = function(answer) {
     clearInterval(timer);
     
     if (answer === currentPlayer.name) {
-        score += 10 * difficulties[currentDifficulty].multiplier;
+        let points = 10 * difficulties[currentDifficulty].multiplier;
+        score += points;
         cash += 5 * difficulties[currentDifficulty].cashMultiplier;
         streak++;
         if (streak > bestStreak) bestStreak = streak;
         totalXp += 10;
         
-        showResult('✅ صحيح!', '#4caf50');
+        showResult('✅ صحيح! +' + points, '#4CAF50');
     } else {
         streak = 0;
-        showResult(`❌ خطأ! اللاعب هو ${currentPlayer.name}`, '#f44336');
+        showResult('❌ خطأ! اللاعب هو ' + currentPlayer.name, '#f44336');
     }
     
     updateDisplay();
     loadQuestion();
-}
+};
 
 function showResult(text, color) {
-    const overlay = document.getElementById('result-overlay');
     const resultText = document.getElementById('result-text');
     resultText.textContent = text;
     resultText.style.color = color;
-    overlay.classList.remove('hidden');
+    resultOverlay.classList.remove('hidden');
     
     setTimeout(() => {
-        overlay.classList.add('hidden');
+        resultOverlay.classList.add('hidden');
     }, 1000);
 }
 
 function startTimer() {
     timeLeft = difficulties[currentDifficulty].time;
-    const timerBar = document.getElementById('timer-bar');
-    timerBar.style.width = '100%';
+    const timerFill = document.getElementById('timer-fill');
+    timerFill.style.width = '100%';
     
     timer = setInterval(() => {
         timeLeft--;
-        timerBar.style.width = (timeLeft / difficulties[currentDifficulty].time) * 100 + '%';
+        timerFill.style.width = (timeLeft / difficulties[currentDifficulty].time) * 100 + '%';
         
         if (timeLeft <= 0) {
             clearInterval(timer);
@@ -215,90 +247,88 @@ function startTimer() {
     }, 1000);
 }
 
-function nextInfo() {
+function updateDisplay() {
+    document.getElementById('score').textContent = score;
+    document.getElementById('game-cash').textContent = cash;
+    document.getElementById('points').textContent = (3 - currentInfoIndex) * 10;
+    document.getElementById('streak').textContent = streak;
+    document.getElementById('highscore').textContent = bestStreak;
+}
+
+// ========== المعلومة التالية ==========
+nextInfoBtn.addEventListener('click', function() {
     if (currentInfoIndex < currentPlayer.infos.length - 1) {
         currentInfoIndex++;
         let info = document.createElement('p');
         info.textContent = `• ${currentPlayer.infos[currentInfoIndex]}`;
         document.getElementById('info-box').appendChild(info);
+        updateDisplay();
     }
-}
+});
 
-function claimGift() {
+// ========== هدية اليوم ==========
+giftBtn.addEventListener('click', function() {
     let lastGift = localStorage.getItem('lastGift');
     let today = new Date().toDateString();
     
     if (lastGift === today) {
-        alert('لقد أخذت هديتك اليوم!');
+        alert('لقد أخذت هديتك اليوم! عد غداً');
         return;
     }
     
-    let gifts = [50, 100, 150, 200];
-    let amount = gifts[Math.floor(Math.random() * gifts.length)];
+    let amount = Math.floor(Math.random() * 100) + 50;
     cash += amount;
-    
     localStorage.setItem('lastGift', today);
     alert(`🎁 حصلت على ${amount} كاش!`);
     updateDisplay();
-}
+});
 
-function updateDisplay() {
-    document.getElementById('score-display').textContent = score;
-    document.getElementById('cash-display-game').textContent = cash;
-    document.getElementById('points-display').textContent = (3 - currentInfoIndex) * 10;
-}
-
-function updateLeaderboard() {
-    let list = document.getElementById('leaderboard-list');
-    list.innerHTML = '<li>🏆 أفضل النتائج</li>';
-}
-
-// Power-ups
-document.getElementById('powerup-5050').addEventListener('click', function() {
+// ========== Power-ups ==========
+powerup5050.addEventListener('click', function() {
     if (cash >= 15) {
         cash -= 15;
         powerupsUsed++;
-        alert('تم تفعيل 50/50');
+        alert('تم تفعيل 50/50 - تم حذف إجابتين');
         updateDisplay();
     } else {
-        alert('الكاش غير كافي');
+        alert('💰 الكاش غير كافي');
     }
 });
 
-document.getElementById('powerup-nation').addEventListener('click', function() {
+powerupNation.addEventListener('click', function() {
     if (cash >= 20) {
         cash -= 20;
         powerupsUsed++;
-        alert(`الجنسية: ${currentPlayer.nationality}`);
+        alert(`🌍 الجنسية: ${currentPlayer.nationality}`);
         updateDisplay();
     } else {
-        alert('الكاش غير كافي');
+        alert('💰 الكاش غير كافي');
     }
 });
 
-document.getElementById('powerup-club').addEventListener('click', function() {
+powerupClub.addEventListener('click', function() {
     if (cash >= 25) {
         cash -= 25;
         powerupsUsed++;
-        alert(`النادي: ${currentPlayer.mainClub}`);
+        alert(`👕 النادي: ${currentPlayer.mainClub}`);
         updateDisplay();
     } else {
-        alert('الكاش غير كافي');
+        alert('💰 الكاش غير كافي');
     }
 });
 
-document.getElementById('powerup-hint').addEventListener('click', function() {
+powerupHint.addEventListener('click', function() {
     if (cash >= 30) {
         cash -= 30;
         powerupsUsed++;
-        alert(`أول حرف: ${currentPlayer.name[0]}`);
+        alert(`🔤 أول حرف: ${currentPlayer.name[0]}`);
         updateDisplay();
     } else {
-        alert('الكاش غير كافي');
+        alert('💰 الكاش غير كافي');
     }
 });
 
-document.getElementById('powerup-swap').addEventListener('click', function() {
+powerupSwap.addEventListener('click', function() {
     if (cash >= 35) {
         cash -= 35;
         powerupsUsed++;
@@ -306,49 +336,52 @@ document.getElementById('powerup-swap').addEventListener('click', function() {
         loadQuestion();
         updateDisplay();
     } else {
-        alert('الكاش غير كافي');
+        alert('💰 الكاش غير كافي');
     }
 });
 
-// أزرار الأوضاع
-normalMode.addEventListener('click', function() {
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    gameMode = 'normal';
+// ========== الإعدادات ==========
+settingsBtn.addEventListener('click', function() {
+    settingsModal.classList.remove('hidden');
 });
 
-challengeMode.addEventListener('click', function() {
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    gameMode = 'challenge';
+closeSettings.addEventListener('click', function() {
+    settingsModal.classList.add('hidden');
 });
 
-bossMode.addEventListener('click', function() {
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    gameMode = 'boss';
+leaderboardBtn.addEventListener('click', function() {
+    leaderboardModal.classList.remove('hidden');
 });
 
-blindMode.addEventListener('click', function() {
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    gameMode = 'blind';
+closeLeaderboard.addEventListener('click', function() {
+    leaderboardModal.classList.add('hidden');
 });
 
-// Reset data
 resetData.addEventListener('click', function() {
-    if (confirm('هل أنت متأكد؟')) {
+    if (confirm('هل أنت متأكد من حذف كل البيانات؟')) {
         localStorage.clear();
-        alert('تم إعادة تعيين البيانات');
+        alert('✅ تم إعادة تعيين البيانات');
     }
 });
 
-// Load saved data
-function loadGame() {
+// ========== الصوت والاهتزاز ==========
+document.getElementById('sound-toggle').addEventListener('change', function(e) {
+    console.log('Sound:', e.target.checked);
+});
+
+document.getElementById('vibration-toggle').addEventListener('change', function(e) {
+    console.log('Vibration:', e.target.checked);
+});
+
+// ========== تحميل البيانات المحفوظة ==========
+function loadSavedData() {
     score = parseInt(localStorage.getItem('score') || '0');
     cash = parseInt(localStorage.getItem('cash') || '100');
     bestStreak = parseInt(localStorage.getItem('bestStreak') || '0');
     totalXp = parseInt(localStorage.getItem('totalXp') || '0');
+    
+    document.getElementById('highscore').textContent = bestStreak;
+    document.getElementById('cash').textContent = cash;
 }
 
-loadGame();
+loadSavedData();
