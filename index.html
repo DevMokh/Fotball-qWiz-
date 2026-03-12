@@ -39,11 +39,6 @@
                 <span>📊</span>
                 المستويات
             </button>
-
-            <button onclick="showAchievements()" class="menu-btn achievements-btn">
-                <span>🏆</span>
-                الإنجازات
-            </button>
             
             <button onclick="showLeaderboard()" class="menu-btn leaderboard-btn">
                 <span>🏆</span>
@@ -55,14 +50,14 @@
                 الإعدادات
             </button>
         </div>
-        <div class="footer">© 2024 خمن اللاعب - جميع الحقوق محفوظة</div>
+        <div class="footer">© 2024 خمن اللاعب</div>
     </div>
 
     <!-- شاشة اللعب -->
     <div id="game-screen" class="screen">
         <div class="game-header">
             <button onclick="goBack()" class="back-btn">🔙</button>
-            <div class="level-info">المستوى <span id="current-level">1</span>/<span id="total-levels">20</span></div>
+            <div class="level-info">المستوى <span id="current-level">1</span>/<span id="total-levels">10</span></div>
             <div class="score-info">🏆 <span id="current-score">0</span></div>
         </div>
 
@@ -73,20 +68,12 @@
 
         <div class="player-image-container">
             <div id="player-image" class="player-image"></div>
-            <div class="hint-button-container">
-                <button onclick="useHint()" class="hint-btn" id="hint-btn">
-                    💡 تلميح (<span id="hint-count">10</span>)
-                </button>
-            </div>
+            <button onclick="useHint()" class="hint-btn" id="hint-btn">💡 تلميح</button>
         </div>
 
         <div class="hint-display" id="hint-display"></div>
-
         <div class="options-container" id="options-container"></div>
-
-        <div class="streak-counter" id="streak-counter">
-            🔥 السلسلة: <span id="streak-count">0</span>
-        </div>
+        <div class="streak-counter">🔥 السلسلة: <span id="streak-count">0</span></div>
     </div>
 
     <!-- شاشة المستويات -->
@@ -94,19 +81,8 @@
         <div class="game-header">
             <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>المستويات</h2>
-            <div></div>
         </div>
         <div class="levels-grid" id="levels-grid"></div>
-    </div>
-
-    <!-- شاشة الإنجازات -->
-    <div id="achievements-screen" class="screen">
-        <div class="game-header">
-            <button onclick="goBack()" class="back-btn">🔙</button>
-            <h2>🏆 الإنجازات</h2>
-            <div></div>
-        </div>
-        <div class="achievements-grid" id="achievements-grid"></div>
     </div>
 
     <!-- شاشة أفضل اللاعبين -->
@@ -114,7 +90,6 @@
         <div class="game-header">
             <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>🏆 أفضل اللاعبين</h2>
-            <div></div>
         </div>
         <div class="leaderboard-list" id="leaderboard-list"></div>
     </div>
@@ -124,7 +99,6 @@
         <div class="game-header">
             <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>⚙️ الإعدادات</h2>
-            <div></div>
         </div>
         
         <div class="settings-options">
@@ -144,13 +118,8 @@
                 </label>
             </div>
             
-            <button onclick="resetProgress()" class="reset-btn">
-                🔄 إعادة تعيين التقدم
-            </button>
-            
-            <div class="app-version">
-                الإصدار 1.0.0
-            </div>
+            <button onclick="resetProgress()" class="reset-btn">🔄 إعادة تعيين التقدم</button>
+            <div class="app-version">الإصدار 1.0.0</div>
         </div>
     </div>
 
