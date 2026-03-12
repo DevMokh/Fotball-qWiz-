@@ -6,297 +6,353 @@
     <title>اعرف اللاعب</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-wrapper">
-        <!-- ========== شاشة البداية (بسيطة) ========== -->
-        <div id="start-screen" class="screen">
-            <div class="header-bar">
-                <button class="icon-btn" id="settings-btn">⚙️</button>
-                <div class="stats-group">
-                    <div class="stat-item">
-                        <span class="icon">🏆</span>
+    <div class="game-container">
+        <!-- ===== شاشة البداية (Minimal) ===== -->
+        <div id="start-screen" class="screen start-screen">
+            <div class="top-bar">
+                <button class="icon-btn" id="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <div class="stats">
+                    <div class="stat-badge">
+                        <i class="fas fa-trophy"></i>
                         <span id="highscore-display">0</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="icon">💰</span>
+                    <div class="stat-badge">
+                        <i class="fas fa-coins"></i>
                         <span id="cash-display">100</span>
                     </div>
                 </div>
-                <button class="icon-btn" id="leaderboard-btn">📊</button>
+                <button class="icon-btn" id="leaderboard-btn">
+                    <i class="fas fa-chart-bar"></i>
+                </button>
             </div>
-            
-            <div class="logo-container">
+
+            <div class="logo-section">
+                <div class="logo-glow"></div>
                 <img src="https://i.postimg.cc/bJs4zzxS/1000060703.png" alt="شعار اللعبة" class="game-logo">
             </div>
-            
-            <div class="player-level-container">
+
+            <div class="level-progress">
                 <div class="level-badge" id="level-badge">مبتدئ</div>
-                <div class="xp-bar">
-                    <div class="xp-bar-fill" id="xp-bar-fill" style="width: 0%"></div>
+                <div class="xp-track">
+                    <div class="xp-fill" id="xp-bar-fill" style="width: 0%"></div>
                 </div>
             </div>
-            
-            <button class="play-btn" id="play-btn">ابدأ اللعب</button>
+
+            <button class="play-button" id="play-btn">
+                <span>ابدأ اللعب</span>
+                <i class="fas fa-play"></i>
+            </button>
+
+            <div class="decor-circle circle-1"></div>
+            <div class="decor-circle circle-2"></div>
         </div>
 
-        <!-- ========== شاشة اللعب (فيها كل الخيارات) ========== -->
-        <div id="game-container" class="screen hidden">
-            <!-- الهيدر -->
+        <!-- ===== شاشة اللعب ===== -->
+        <div id="game-container" class="screen game-screen hidden">
+            <!-- Header -->
             <div class="game-header">
-                <button class="icon-btn-game" id="back-to-menu-btn-game">☰</button>
+                <button class="back-btn" id="back-to-menu-btn-game">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
                 <div class="game-stats">
-                    <div class="stat-item-game">
-                        <span class="icon">🏆</span>
+                    <div class="stat-item">
+                        <i class="fas fa-trophy"></i>
                         <span id="score-display">0</span>
                     </div>
-                    <div class="stat-item-game">
-                        <span class="icon">💰</span>
+                    <div class="stat-item">
+                        <i class="fas fa-coins"></i>
                         <span id="game-cash-display">100</span>
                     </div>
-                    <div class="stat-item-game">
-                        <span class="icon">⚡</span>
+                    <div class="stat-item">
+                        <i class="fas fa-bolt"></i>
                         <span id="potential-points-display">30</span>
                     </div>
                 </div>
             </div>
 
-            <!-- اختيارات اللعبة (تظهر هنا) -->
-            <div class="game-options">
-                <h3>اختر نمط اللعب:</h3>
-                <div class="mode-selector">
-                    <button class="mode-btn active" id="normal-mode-btn">🎮 عادي</button>
-                    <button class="mode-btn" id="challenge-mode-btn">⚡ تحدي</button>
-                    <button class="mode-btn" id="boss-mode-btn">🔥 معركة النجوم</button>
-                    <button class="mode-btn" id="blind-mode-btn">🕶️ وضع أعمى</button>
+            <!-- Timer -->
+            <div class="timer-section">
+                <div class="timer-bar-container">
+                    <div id="timer-bar" class="timer-bar" style="width: 100%"></div>
                 </div>
+                <div id="challenge-timer-container" class="challenge-timer hidden">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span id="challenge-timer">60</span> ث
+                </div>
+            </div>
 
-                <h3>اختر مستوى الصعوبة:</h3>
-                <div class="difficulty-selector">
-                    <div class="difficulty-buttons">
-                        <button class="difficulty-btn active" data-difficulty="easy">سهل</button>
-                        <button class="difficulty-btn" data-difficulty="medium">متوسط</button>
-                        <button class="difficulty-btn" data-difficulty="hard">صعب</button>
-                        <button class="difficulty-btn" data-difficulty="expert">خبير</button>
-                        <button class="difficulty-btn" data-difficulty="legend">أسطورة</button>
+            <!-- Player Info -->
+            <div class="player-info-bar">
+                <div class="level-indicator">
+                    <i class="fas fa-star"></i>
+                    <span id="player-level-text">مبتدئ</span>
+                </div>
+                <div class="streak-indicator">
+                    <i class="fas fa-fire"></i>
+                    <span id="streak-display">0</span>
+                </div>
+            </div>
+
+            <!-- Game Modes & Difficulty (Hidden until game starts) -->
+            <div class="game-settings-panel">
+                <div class="settings-group">
+                    <h4>نمط اللعب</h4>
+                    <div class="mode-selector">
+                        <button class="mode-option active" id="normal-mode-btn">
+                            <i class="fas fa-gamepad"></i>
+                            <span>عادي</span>
+                        </button>
+                        <button class="mode-option" id="challenge-mode-btn">
+                            <i class="fas fa-stopwatch"></i>
+                            <span>تحدي</span>
+                        </button>
+                        <button class="mode-option" id="boss-mode-btn">
+                            <i class="fas fa-crown"></i>
+                            <span>معركة النجوم</span>
+                        </button>
+                        <button class="mode-option" id="blind-mode-btn">
+                            <i class="fas fa-eye-slash"></i>
+                            <span>وضع أعمى</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- هدية اليوم -->
-                <div class="daily-gift">
-                    <button class="gift-btn" id="claim-gift-btn">🎁 هدية اليوم</button>
+                <div class="settings-group">
+                    <h4>مستوى الصعوبة</h4>
+                    <div class="difficulty-selector">
+                        <button class="difficulty-pill active" data-difficulty="easy">سهل</button>
+                        <button class="difficulty-pill" data-difficulty="medium">متوسط</button>
+                        <button class="difficulty-pill" data-difficulty="hard">صعب</button>
+                        <button class="difficulty-pill" data-difficulty="expert">خبير</button>
+                        <button class="difficulty-pill" data-difficulty="legend">أسطورة</button>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <button class="gift-button" id="claim-gift-btn">
+                        <i class="fas fa-gift"></i>
+                        <span>هدية اليوم</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- مؤقت -->
-            <div class="timer-bar-container">
-                <div id="timer-bar" class="timer-bar" style="width: 100%"></div>
+            <!-- Player Image (Blind Mode) -->
+            <div class="player-image-container hidden" id="playerImageContainer">
+                <div class="image-frame">
+                    <img id="playerImage" src="" alt="صورة اللاعب">
+                </div>
             </div>
 
-            <div id="challenge-timer-container" class="challenge-timer hidden">
-                <span class="icon">⏰</span>
-                <span id="challenge-timer">60</span> ث
-            </div>
+            <!-- Info Box -->
+            <div class="info-card" id="info-box"></div>
 
-            <!-- مستوى اللاعب -->
-            <div class="level-info">
-                <span id="player-level-text">مبتدئ</span>
-                <span class="streak-badge" id="streak-display">🔥 0</span>
-            </div>
-
-            <!-- صورة اللاعب (للأعمى) -->
-            <div class="player-image-container" id="playerImageContainer" style="display: none;">
-                <img id="playerImage" class="player-image" src="" alt="صورة اللاعب">
-            </div>
-
-            <!-- معلومات اللاعب -->
-            <div class="info-box" id="info-box"></div>
-
-            <!-- زر المعلومة التالية -->
+            <!-- Next Info Button -->
             <div class="next-info-container">
-                <button id="next-info-btn" class="next-info-btn">▶ المعلومة التالية +10 نقاط</button>
+                <button id="next-info-btn" class="next-info-button">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>المعلومة التالية</span>
+                    <span class="badge">+10</span>
+                </button>
             </div>
 
-            <!-- أزرار الإجابة -->
-            <div class="choices" id="choices"></div>
+            <!-- Choices -->
+            <div class="choices-grid" id="choices"></div>
 
             <!-- Power-ups -->
-            <div class="powerups-container">
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-5050" title="احذف خيارين خاطئين">50/50</button>
-                    <span class="powerup-cost" id="powerup-5050-cost">15</span>
+            <div class="powerups-bar">
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-5050">
+                        <span>50/50</span>
+                    </button>
+                    <span class="powerup-cost">15</span>
                 </div>
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-nation" title="اعرف جنسية اللاعب">🌍</button>
-                    <span class="powerup-cost" id="powerup-nation-cost">20</span>
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-nation">
+                        <i class="fas fa-globe-asia"></i>
+                    </button>
+                    <span class="powerup-cost">20</span>
                 </div>
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-club" title="اعرف نادي اللاعب">👕</button>
-                    <span class="powerup-cost" id="powerup-club-cost">25</span>
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-club">
+                        <i class="fas fa-tshirt"></i>
+                    </button>
+                    <span class="powerup-cost">25</span>
                 </div>
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-hint" title="اعرف أول حرف من الاسم">A..?</button>
-                    <span class="powerup-cost" id="powerup-hint-cost">30</span>
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-hint">
+                        <span>A..?</span>
+                    </button>
+                    <span class="powerup-cost">30</span>
                 </div>
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-swap" title="بدل اللاعب الحالي">🔄</button>
-                    <span class="powerup-cost" id="powerup-swap-cost">35</span>
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-swap">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                    <span class="powerup-cost">35</span>
                 </div>
-                <div class="powerup-wrapper">
-                    <button class="powerup-btn" id="powerup-blind-hint" title="تلميح في الوضع الأعمى">🕶️</button>
-                    <span class="powerup-cost" id="powerup-blind-cost">40</span>
+                <div class="powerup-item">
+                    <button class="powerup-circle" id="powerup-blind-hint">
+                        <i class="fas fa-mask"></i>
+                    </button>
+                    <span class="powerup-cost">40</span>
                 </div>
             </div>
 
-            <!-- ترتيب الأندية -->
+            <!-- Club Standings -->
             <div id="club-standings" class="club-standings hidden"></div>
         </div>
 
-        <!-- شاشة النهاية -->
-        <div id="end-screen" class="screen hidden">
-            <h2 id="end-title">انتهت اللعبة!</h2>
-            
-            <div class="end-stats-grid">
-                <div class="stat-card">
-                    <span class="stat-icon">🎯</span>
-                    <span class="stat-label">النتيجة</span>
-                    <span class="stat-value" id="final-score-display">0</span>
+        <!-- ===== شاشة النهاية ===== -->
+        <div id="end-screen" class="screen end-screen hidden">
+            <div class="end-content">
+                <h2>انتهت اللعبة!</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <i class="fas fa-bullseye"></i>
+                        <span class="stat-label">النتيجة</span>
+                        <span class="stat-value" id="final-score-display">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-coins"></i>
+                        <span class="stat-label">الكاش</span>
+                        <span class="stat-value" id="final-cash-display">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-fire"></i>
+                        <span class="stat-label">السلسلة</span>
+                        <span class="stat-value" id="final-streak-display">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-trophy"></i>
+                        <span class="stat-label">أفضل سلسلة</span>
+                        <span class="stat-value" id="final-best-streak-display">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-star"></i>
+                        <span class="stat-label">الخبرة</span>
+                        <span class="stat-value" id="final-xp-display">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="stat-label">المستوى</span>
+                        <span class="stat-value" id="final-level-display">مبتدئ</span>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-icon">💰</span>
-                    <span class="stat-label">الكاش</span>
-                    <span class="stat-value" id="final-cash-display">0</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">🔥</span>
-                    <span class="stat-label">السلسلة</span>
-                    <span class="stat-value" id="final-streak-display">0</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">🏆</span>
-                    <span class="stat-label">أفضل سلسلة</span>
-                    <span class="stat-value" id="final-best-streak-display">0</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">⭐</span>
-                    <span class="stat-label">الخبرة</span>
-                    <span class="stat-value" id="final-xp-display">0</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">📊</span>
-                    <span class="stat-label">المستوى</span>
-                    <span class="stat-value" id="final-level-display">مبتدئ</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">⚡</span>
-                    <span class="stat-label">Power-ups</span>
-                    <span class="stat-value" id="final-powerups-used-count">0</span>
-                </div>
-            </div>
 
-            <div class="achievement-unlock hidden" id="achievement-unlock">
-                <span class="icon">🏆</span>
-                <span>إنجاز جديد: </span>
-                <span id="achievement-name"></span>
-            </div>
+                <div class="achievement-popup hidden" id="achievement-unlock">
+                    <i class="fas fa-medal"></i>
+                    <span>إنجاز جديد: </span>
+                    <span id="achievement-name"></span>
+                </div>
 
-            <div class="end-buttons">
-                <button class="play-btn" id="restart-btn">🔄 العب مجددًا</button>
-                <button class="secondary-btn" id="share-btn">📤 شارك</button>
-                <button class="secondary-btn" id="back-to-menu-btn-end">🏠 القائمة</button>
+                <div class="end-actions">
+                    <button class="primary-button" id="restart-btn">
+                        <i class="fas fa-redo-alt"></i>
+                        <span>العب مجدداً</span>
+                    </button>
+                    <button class="secondary-button" id="share-btn">
+                        <i class="fas fa-share-alt"></i>
+                        <span>شارك</span>
+                    </button>
+                    <button class="text-button" id="back-to-menu-btn-end">
+                        <i class="fas fa-home"></i>
+                        <span>القائمة الرئيسية</span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Overlay النتائج -->
-        <div id="result-overlay" class="result-overlay hidden">
+        <!-- ===== Overlay النتائج ===== -->
+        <div id="result-overlay" class="result-floating hidden">
             <h2 id="result-text"></h2>
         </div>
-        
-        <!-- مودال الإعدادات -->
+
+        <!-- ===== مودال الإعدادات ===== -->
         <div class="modal-overlay hidden" id="settings-modal">
-            <div class="modal-content">
+            <div class="modal-card">
                 <div class="modal-header">
-                    <h3>⚙️ الإعدادات</h3>
-                    <button class="close-btn" id="close-settings-btn">✕</button>
+                    <h3>الإعدادات</h3>
+                    <button class="modal-close" id="close-settings-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <div class="setting-item">
-                        <span>🔊 الصوت</span>
-                        <label class="switch">
+                    <div class="setting-row">
+                        <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
+                        <label class="toggle-switch">
                             <input type="checkbox" id="sound-toggle" checked>
-                            <span class="slider"></span>
+                            <span class="toggle-slider"></span>
                         </label>
                     </div>
-                    <div class="setting-item">
-                        <span>📳 الاهتزاز</span>
-                        <label class="switch">
+                    <div class="setting-row">
+                        <span><i class="fas fa-mobile-alt"></i> الاهتزاز</span>
+                        <label class="toggle-switch">
                             <input type="checkbox" id="vibration-toggle" checked>
-                            <span class="slider"></span>
+                            <span class="toggle-slider"></span>
                         </label>
                     </div>
-                    <div class="setting-item">
-                        <span>🎨 الثيم</span>
-                        <select id="theme-select" class="theme-select">
+                    <div class="setting-row">
+                        <span><i class="fas fa-palette"></i> الثيم</span>
+                        <select id="theme-select" class="theme-picker">
                             <option value="classic">كلاسيكي</option>
-                            <option value="dark">ليلي</option>
-                            <option value="red">أحمر</option>
-                            <option value="blue">أزرق</option>
-                            <option value="gold">ذهبي</option>
+                            <option value="dark">داكن</option>
+                            <option value="neon">نيون</option>
+                            <option value="royal">ملكي</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="secondary-btn" id="reset-game-data">🔄 إعادة تعيين</button>
+                    <button class="danger-button" id="reset-game-data">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>إعادة تعيين</span>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- مودال لوحة المتصدرين -->
+        <!-- ===== مودال لوحة المتصدرين ===== -->
         <div class="modal-overlay hidden" id="leaderboard-modal">
-            <div class="modal-content">
+            <div class="modal-card">
                 <div class="modal-header">
-                    <h3>📊 لوحة المتصدرين</h3>
-                    <button class="close-btn" id="close-leaderboard-btn">✕</button>
+                    <h3>لوحة المتصدرين</h3>
+                    <button class="modal-close" id="close-leaderboard-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <ul class="leaderboard-list" id="leaderboard-list"></ul>
+                    <ul class="leaderboard" id="leaderboard-list"></ul>
                 </div>
             </div>
         </div>
 
-        <!-- قاعة المشاهير -->
+        <!-- ===== مودال قاعة المشاهير ===== -->
         <div class="modal-overlay hidden" id="hall-of-fame-modal">
-            <div class="modal-content">
+            <div class="modal-card">
                 <div class="modal-header">
                     <h3>🏆 قاعة المشاهير</h3>
-                    <button class="close-btn" id="close-hall-of-fame-btn">✕</button>
+                    <button class="modal-close" id="close-hall-of-fame-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="modal-body" id="hall-of-fame-content"></div>
             </div>
         </div>
 
-        <!-- مجموعتي -->
-        <div class="modal-overlay hidden" id="collection-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>📚 مجموعتي</h3>
-                    <button class="close-btn" id="close-collection-btn">✕</button>
-                </div>
-                <div class="modal-body" id="collection-content"></div>
-                <div class="modal-footer">
-                    <button class="secondary-btn" id="open-market-btn">🏪 سوق الانتقالات</button>
-                </div>
+        <!-- ===== Loading Spinner ===== -->
+        <div id="loading-spinner" class="loading-overlay hidden">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
             </div>
-        </div>
-
-        <!-- مؤشر التحميل -->
-        <div id="loading-spinner" class="loading-spinner hidden">
-            <div class="spinner-content">
-                <div class="spinner-icon"></div>
-                <p>جاري تحميل اللاعبين...</p>
-            </div>
+            <p>جاري تحميل اللاعبين...</p>
         </div>
     </div>
 
