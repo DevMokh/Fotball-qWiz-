@@ -8,13 +8,16 @@
     --text-muted: #aaaaaa;
     --green-gradient: linear-gradient(180deg, #1c9c3c 0%, #1a8a35 100%);
     --green-shadow: #136227;
+    --font-family-main: 'Tajawal', sans-serif;
+    /* ألوان جديدة للقائمة المنبثقة */
+    --modal-bg: #1f2a38;
+    --modal-header-bg: #161e28;
+    --modal-btn-bg: linear-gradient(180deg, #007bff 0%, #0056b3 100%);
+    --modal-btn-shadow: #003d80;
 }
 
-/* Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Cairo:wght@700;900&display=swap');
-
 body {
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--font-family-main);
     margin: 0;
     color: var(--text-color);
     background-color: var(--dark-bg);
@@ -28,10 +31,10 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://i.postimg.cc/Kcp1YQn3/file-000000004fcc7246b73a2ec06a458058.png');
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://i.postimg.cc/qv3wwNk6/file-000000004fcc7246b73a2ec06a458058.png');
     display: flex;
     flex-direction: column;
-    max-width: 420px; /* For better viewing on desktop */
+    max-width: 420px;
     margin: 0 auto;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
@@ -48,7 +51,7 @@ body {
     overflow-y: auto;
 }
 
-/* --- Top Bar --- */
+/* --- Top Bar (كما هو) --- */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -57,7 +60,6 @@ body {
     padding: 10px 0;
     flex-shrink: 0;
 }
-
 .icon-btn {
     background: transparent;
     border: none;
@@ -69,9 +71,7 @@ body {
     transition: color 0.2s;
 }
 .icon-btn:hover { color: var(--text-color); }
-
 .resources { display: flex; gap: 10px; }
-
 .resource-item {
     display: flex;
     align-items: center;
@@ -81,11 +81,10 @@ body {
     border: 1px solid var(--surface-border);
     min-width: 80px;
 }
-
 .resource-item span { font-size: 1.2em; }
-
 .resource-value {
-    font-family: 'Teko', sans-serif;
+    font-family: var(--font-family-main);
+    font-weight: 900;
     font-size: 1.5em;
     margin: 0 8px;
     flex-grow: 1;
@@ -93,7 +92,7 @@ body {
     color: var(--primary-gold);
 }
 
-/* --- Start Screen --- */
+/* --- Start Screen (كما هو) --- */
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -103,16 +102,15 @@ body {
     gap: 20px;
     padding-bottom: 50px;
 }
-
 .logo-container { max-width: 280px; }
 .game-logo { width: 100%; object-fit: contain; }
-
 .play-btn, .secondary-btn {
     border: none;
     border-radius: 15px;
     padding: 15px 40px;
     color: var(--text-color);
-    font-family: 'Teko', sans-serif;
+    font-family: var(--font-family-main);
+    font-weight: 900;
     font-size: 2.2em;
     cursor: pointer;
     text-transform: uppercase;
@@ -124,7 +122,6 @@ body {
     width: 80%;
     max-width: 300px;
 }
-
 .play-btn {
     background: var(--green-gradient);
     box-shadow: 0 6px 0 var(--green-shadow);
@@ -134,7 +131,6 @@ body {
     box-shadow: 0 2px 0 var(--green-shadow);
 }
 .play-btn span { font-size: 0.8em; }
-
 .secondary-btn {
     background: #4a4a4a;
     box-shadow: 0 6px 0 #2a2a2a;
@@ -145,16 +141,9 @@ body {
     box-shadow: 0 2px 0 #2a2a2a;
 }
 
-/* --- Game Screen --- */
-#game-container {
-    justify-content: space-between;
-}
-.game-area {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
+/* --- Game Screen (كما هو) --- */
+#game-container { justify-content: space-between; }
+.game-area { width: 100%; display: flex; flex-direction: column; flex-grow: 1; }
 .info-box {
     background: var(--surface-bg);
     border: 1px solid var(--surface-border);
@@ -163,41 +152,28 @@ body {
     margin: 10px 0;
     min-height: 100px;
     text-align: right;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    line-height: 1.6;
     backdrop-filter: blur(5px);
     flex-grow: 1;
 }
 .info-box p { margin: 8px 0; }
-
-.choices {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin: 15px 0;
-}
+.choices { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 15px 0; }
 .choices button {
     background: var(--surface-bg);
     border: 1px solid var(--surface-border);
     color: var(--text-color);
     padding: 16px;
-    font-size: 1.2em;
-    font-family: 'Cairo', sans-serif;
+    font-size: 1.3em;
+    font-family: var(--font-family-main);
     font-weight: 700;
     border-radius: 12px;
     transition: all 0.2s ease;
 }
-.choices button:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--primary-gold);
-}
+.choices button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); border-color: var(--primary-gold); }
 .choices button:disabled { opacity: 0.4; cursor: not-allowed; }
-
 .game-footer { margin-top: auto; }
-.powerups-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 15px 0;
-}
+.powerups-container { display: flex; justify-content: space-around; margin: 15px 0; }
 .powerup-btn {
     background: var(--surface-bg);
     border: 1px solid var(--surface-border);
@@ -210,132 +186,127 @@ body {
 }
 .powerup-btn:hover:not(:disabled) { border-color: var(--primary-gold); }
 
-#next-info-btn {
-    width: 100%;
-    background: var(--green-gradient);
-    border: none;
-    border-radius: 12px;
-    padding: 12px;
-    color: var(--text-color);
-    font-family: 'Teko', sans-serif;
-    font-size: 1.8em;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--green-shadow);
-}
-#next-info-btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 var(--green-shadow);
-}
-
-/* --- End Screen --- */
-.end-screen-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    text-align: center;
-}
-#final-score-label {
-    font-family: 'Teko', sans-serif;
-    font-size: 3em;
-    color: var(--primary-gold);
-    margin: 0;
-}
-.stats-grid {
-    display: flex;
-    gap: 20px;
-    background: var(--surface-bg);
-    padding: 20px;
-    border-radius: 16px;
-    width: 90%;
-}
+/* --- End Screen (كما هو) --- */
+.end-screen-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; }
+#final-score-label { font-family: var(--font-family-main); font-weight: 900; font-size: 3em; color: var(--primary-gold); margin: 0; }
+.stats-grid { display: flex; gap: 20px; background: var(--surface-bg); padding: 20px; border-radius: 16px; width: 90%; }
 .stat-item { flex: 1; }
-.stat-item h3 {
-    margin: 0 0 5px 0;
-    font-size: 1em;
-    color: var(--text-muted);
-}
-.stat-item p {
-    margin: 0;
-    font-family: 'Teko', sans-serif;
-    font-size: 2em;
-    color: var(--primary-gold);
-}
+.stat-item h3 { margin: 0 0 5px 0; font-size: 1em; color: var(--text-muted); }
+.stat-item p { margin: 0; font-family: var(--font-family-main); font-weight: 900; font-size: 2em; color: var(--primary-gold); }
 
-/* --- Overlays & Modals --- */
-.result-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    display: flex; justify-content: center; align-items: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-}
-.result-text {
-    font-size: 4em; font-weight: 900;
-    transform: scale(0.5); transition: transform 0.3s;
-}
+/* --- Result Overlay (كما هو) --- */
+.result-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.result-text { font-size: 4em; font-weight: 900; transform: scale(0.5); transition: transform 0.3s; }
 
+/* --- Professional Settings Modal --- */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
     display: flex; justify-content: center; align-items: center;
     z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
 }
 .modal-content {
-    background: var(--surface-bg);
-    border: 1px solid var(--surface-border);
-    border-radius: 16px;
-    padding: 20px;
-    width: 85%;
-    max-width: 350px;
+    background: var(--modal-bg);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+.modal-header {
+    background: var(--modal-header-bg);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center; /* Center header text */
+    align-items: center;
     position: relative;
+}
+.modal-header h3 {
+    margin: 0;
+    font-family: var(--font-family-main);
+    font-weight: 900;
+    font-size: 1.8em;
+    color: var(--text-color);
 }
 .close-btn {
     position: absolute;
-    top: 10px; left: 10px;
-    background: none; border: none;
-    font-size: 2em; color: var(--text-muted);
-    cursor: pointer;
-}
-.modal-content h2 {
-    font-family: 'Teko', sans-serif;
-    font-size: 2.5em;
-    text-align: center;
-    margin: 0 0 20px 0;
-    color: var(--primary-gold);
-}
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--surface-border);
-}
-.setting-item label { font-size: 1.2em; }
-.toggle-btn {
-    background: var(--green-gradient);
+    top: 50%;
+    right: 15px; /* Changed from left to right for LTR feel */
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
     border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     font-size: 1.5em;
-    padding: 5px 10px;
-    border-radius: 10px;
+    color: var(--text-muted);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.modal-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.sound-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.modal-icon-btn {
+    background: var(--modal-btn-bg);
+    border: none;
+    border-radius: 12px;
+    width: 60px;
+    height: 50px;
+    font-size: 1.8em;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--modal-btn-shadow);
+    transition: all 0.1s ease;
+}
+.modal-icon-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--modal-btn-shadow);
+}
+.modal-btn {
+    background: var(--modal-btn-bg);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-family: var(--font-family-main);
+    font-weight: 700;
+    font-size: 1.4em;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--modal-btn-shadow);
+    transition: all 0.1s ease;
+}
+.modal-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--modal-btn-shadow);
+}
+.modal-footer {
+    padding: 15px;
+    text-align: center;
+}
+.privacy-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.privacy-link:hover {
+    color: var(--text-color);
 }
 
-/* --- Timer --- */
-.timer-container {
-    position: fixed;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 8px;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 20;
-    display: none; /* Hidden by default */
-}
-.timer-bar {
-    width: 100%;
-    height: 100%;
-    background: var(--green-gradient);
-    border-radius: 0;
-    transition: width 0.2s linear;
-}
+/* --- Timer (كما هو) --- */
+.timer-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 8px; background-color: rgba(0, 0, 0, 0.5); z-index: 20; display: none; }
+.timer-bar { width: 100%; height: 100%; background: var(--green-gradient); border-radius: 0; transition: width 0.2s linear; }
