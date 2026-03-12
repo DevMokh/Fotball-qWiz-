@@ -30,27 +30,27 @@
         </div>
         
         <div class="menu-buttons">
-            <button onclick="window.startGame()" class="menu-btn play-btn">
+            <button onclick="startGame()" class="menu-btn play-btn">
                 <span>▶️</span>
                 ابدأ اللعب
             </button>
             
-            <button onclick="window.showLevels()" class="menu-btn levels-btn">
+            <button onclick="showLevels()" class="menu-btn levels-btn">
                 <span>📊</span>
                 المستويات
             </button>
 
-            <button onclick="window.showAchievements()" class="menu-btn achievements-btn">
+            <button onclick="showAchievements()" class="menu-btn achievements-btn">
                 <span>🏆</span>
                 الإنجازات
             </button>
             
-            <button onclick="window.showLeaderboard()" class="menu-btn leaderboard-btn">
+            <button onclick="showLeaderboard()" class="menu-btn leaderboard-btn">
                 <span>🏆</span>
                 أفضل اللاعبين
             </button>
             
-            <button onclick="window.showSettings()" class="menu-btn settings-btn">
+            <button onclick="showSettings()" class="menu-btn settings-btn">
                 <span>⚙️</span>
                 الإعدادات
             </button>
@@ -58,10 +58,10 @@
         <div class="footer">© 2024 خمن اللاعب - جميع الحقوق محفوظة</div>
     </div>
 
-    <!-- شاشة اللعب (التحدي) -->
+    <!-- شاشة اللعب -->
     <div id="game-screen" class="screen">
         <div class="game-header">
-            <button onclick="window.goBack()" class="back-btn">🔙</button>
+            <button onclick="goBack()" class="back-btn">🔙</button>
             <div class="level-info">المستوى <span id="current-level">1</span>/<span id="total-levels">20</span></div>
             <div class="score-info">🏆 <span id="current-score">0</span></div>
         </div>
@@ -74,7 +74,7 @@
         <div class="player-image-container">
             <div id="player-image" class="player-image"></div>
             <div class="hint-button-container">
-                <button onclick="window.useHint()" class="hint-btn" id="hint-btn">
+                <button onclick="useHint()" class="hint-btn" id="hint-btn">
                     💡 تلميح (<span id="hint-count">10</span>)
                 </button>
             </div>
@@ -92,7 +92,7 @@
     <!-- شاشة المستويات -->
     <div id="levels-screen" class="screen">
         <div class="game-header">
-            <button onclick="window.goBack()" class="back-btn">🔙</button>
+            <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>المستويات</h2>
             <div></div>
         </div>
@@ -102,7 +102,7 @@
     <!-- شاشة الإنجازات -->
     <div id="achievements-screen" class="screen">
         <div class="game-header">
-            <button onclick="window.goBack()" class="back-btn">🔙</button>
+            <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>🏆 الإنجازات</h2>
             <div></div>
         </div>
@@ -112,7 +112,7 @@
     <!-- شاشة أفضل اللاعبين -->
     <div id="leaderboard-screen" class="screen">
         <div class="game-header">
-            <button onclick="window.goBack()" class="back-btn">🔙</button>
+            <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>🏆 أفضل اللاعبين</h2>
             <div></div>
         </div>
@@ -122,7 +122,7 @@
     <!-- شاشة الإعدادات -->
     <div id="settings-screen" class="screen">
         <div class="game-header">
-            <button onclick="window.goBack()" class="back-btn">🔙</button>
+            <button onclick="goBack()" class="back-btn">🔙</button>
             <h2>⚙️ الإعدادات</h2>
             <div></div>
         </div>
@@ -144,12 +144,12 @@
                 </label>
             </div>
             
-            <button onclick="window.resetProgress()" class="reset-btn">
+            <button onclick="resetProgress()" class="reset-btn">
                 🔄 إعادة تعيين التقدم
             </button>
             
             <div class="app-version">
-                الإصدار 3.0.0
+                الإصدار 1.0.0
             </div>
         </div>
     </div>
@@ -159,7 +159,6 @@
         <div class="result-card" id="result-card"></div>
     </div>
 
-    <script src="players.json"></script>
     <script src="script.js"></script>
 </body>
 </html>
