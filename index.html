@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اعرف اللاعب - لعبة التخمين</title>
+    <title>اعرف اللاعب - الأساطير</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -47,12 +47,16 @@
                     <button class="difficulty-btn" data-difficulty="medium">متوسط</button>
                     <button class="difficulty-btn" data-difficulty="hard">صعب</button>
                     <button class="difficulty-btn" data-difficulty="expert">خبير</button>
+                    <button class="difficulty-btn" data-difficulty="legend">أسطورة</button>
                 </div>
             </div>
 
+            <!-- اختيار الوضع -->
             <div class="mode-selector">
                 <button class="mode-btn active" id="normal-mode-btn">🎮 عادي</button>
                 <button class="mode-btn" id="challenge-mode-btn">⚡ تحدي</button>
+                <button class="mode-btn" id="boss-mode-btn">🔥 معركة النجوم</button>
+                <button class="mode-btn" id="blind-mode-btn">🕶️ وضع أعمى</button>
             </div>
 
             <div class="xp-progress-container">
@@ -60,6 +64,11 @@
                     <div id="xp-progress-bar" class="xp-progress-fill" style="width: 0%"></div>
                 </div>
                 <span id="xp-progress-text">0/500 XP</span>
+            </div>
+
+            <!-- الهدية اليومية -->
+            <div id="daily-gift" class="daily-gift">
+                <button class="gift-btn" id="claim-gift-btn">🎁 هدية اليوم</button>
             </div>
             
             <button class="play-btn" id="play-btn">ابدأ اللعب</button>
@@ -85,6 +94,7 @@
                 </div>
             </div>
 
+            <!-- مؤقت التحدي -->
             <div class="timer-bar-container">
                 <div id="timer-bar" class="timer-bar" style="width: 100%"></div>
             </div>
@@ -94,15 +104,29 @@
                 <span id="challenge-timer">60</span> ث
             </div>
 
+            <!-- مستوى اللاعب -->
             <div class="level-info">
                 <span id="player-level-text">مبتدئ</span>
                 <span class="streak-badge" id="streak-display">🔥 0</span>
             </div>
 
+            <!-- صورة اللاعب (للأعمى) -->
+            <div class="player-image-container" id="playerImageContainer" style="display: none;">
+                <img id="playerImage" class="player-image" src="" alt="صورة اللاعب">
+            </div>
+
+            <!-- معلومات اللاعب -->
             <div class="info-box" id="info-box"></div>
 
+            <!-- زر المعلومة التالية -->
+            <div class="next-info-container">
+                <button id="next-info-btn" class="next-info-btn">▶ المعلومة التالية +10 نقاط</button>
+            </div>
+
+            <!-- أزرار الإجابة -->
             <div class="choices" id="choices"></div>
 
+            <!-- قائمة الـ Power-ups -->
             <div class="powerups-container">
                 <div class="powerup-wrapper">
                     <button class="powerup-btn" id="powerup-5050" title="احذف خيارين خاطئين">50/50</button>
@@ -124,7 +148,14 @@
                     <button class="powerup-btn" id="powerup-swap" title="بدل اللاعب الحالي">🔄</button>
                     <span class="powerup-cost" id="powerup-swap-cost">35</span>
                 </div>
+                <div class="powerup-wrapper">
+                    <button class="powerup-btn" id="powerup-blind-hint" title="تلميح في الوضع الأعمى">🕶️</button>
+                    <span class="powerup-cost" id="powerup-blind-cost">40</span>
+                </div>
             </div>
+
+            <!-- ترتيب الأندية (يظهر في وضع معين) -->
+            <div id="club-standings" class="club-standings hidden"></div>
         </div>
 
         <!-- شاشة النهاية -->
@@ -169,12 +200,14 @@
                 </div>
             </div>
 
+            <!-- الإنجازات -->
             <div class="achievement-unlock hidden" id="achievement-unlock">
                 <span class="icon">🏆</span>
                 <span>إنجاز جديد: </span>
                 <span id="achievement-name"></span>
             </div>
 
+            <!-- أزرار النهاية -->
             <div class="end-buttons">
                 <button class="play-btn" id="restart-btn">🔄 العب مجددًا</button>
                 <button class="secondary-btn" id="share-btn">📤 شارك</button>
@@ -209,6 +242,16 @@
                             <span class="slider"></span>
                         </label>
                     </div>
+                    <div class="setting-item">
+                        <span>🎨 الثيم</span>
+                        <select id="theme-select" class="theme-select">
+                            <option value="classic">كلاسيكي</option>
+                            <option value="dark">ليلي</option>
+                            <option value="red">أحمر</option>
+                            <option value="blue">أزرق</option>
+                            <option value="gold">ذهبي</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="secondary-btn" id="reset-game-data">🔄 إعادة تعيين</button>
@@ -225,6 +268,35 @@
                 </div>
                 <div class="modal-body">
                     <ul class="leaderboard-list" id="leaderboard-list"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- قاعة المشاهير -->
+        <div class="modal-overlay hidden" id="hall-of-fame-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🏆 قاعة المشاهير</h3>
+                    <button class="close-btn" id="close-hall-of-fame-btn">✕</button>
+                </div>
+                <div class="modal-body" id="hall-of-fame-content">
+                    <!-- المحتوى هيتولد من JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- مجموعتي (سوق الانتقالات) -->
+        <div class="modal-overlay hidden" id="collection-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📚 مجموعتي</h3>
+                    <button class="close-btn" id="close-collection-btn">✕</button>
+                </div>
+                <div class="modal-body" id="collection-content">
+                    <!-- المحتوى هيتولد من JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" id="open-market-btn">🏪 سوق الانتقالات</button>
                 </div>
             </div>
         </div>
