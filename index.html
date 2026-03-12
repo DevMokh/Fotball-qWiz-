@@ -1,133 +1,50 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خمن اللاعب - Guess the Player</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ملك الألغاز</title>
+  
+  <!-- ربط ملف التصميم -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- شاشة البداية -->
-    <div id="splash-screen" class="screen active">
-        <div class="splash-content">
-            <div class="ball-animation">⚽</div>
-            <h1>خمن اللاعب</h1>
-            <p>Guess the Player</p>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-        </div>
+  <div class="game">
+    <h1>ملك الألغاز</h1>
+    <div class="level">المستوى <span id="level">1</span> - <span id="title">مبتدئ</span></div>
+    
+    <div class="stats">
+      <div>النقاط: <span id="score">0</span></div>
+      <div>العملات: <span id="coins">100</span></div>
+      <div>القلوب: <span id="lives">3</span></div>
+      <div>السلسلة: <span id="streak">0</span></div>
     </div>
 
-    <!-- الشاشة الرئيسية -->
-    <div id="main-screen" class="screen">
-        <div class="header">
-            <h1>⚽ خمن اللاعب</h1>
-            <div class="coins">
-                <span>💰</span>
-                <span id="coin-count">0</span>
-            </div>
-        </div>
-        
-        <div class="menu-buttons">
-            <button onclick="startGame()" class="menu-btn play-btn">
-                <span>▶️</span>
-                ابدأ اللعب
-            </button>
-            
-            <button onclick="showLevels()" class="menu-btn levels-btn">
-                <span>📊</span>
-                المستويات
-            </button>
-            
-            <button onclick="showLeaderboard()" class="menu-btn leaderboard-btn">
-                <span>🏆</span>
-                أفضل اللاعبين
-            </button>
-            
-            <button onclick="showSettings()" class="menu-btn settings-btn">
-                <span>⚙️</span>
-                الإعدادات
-            </button>
-        </div>
-        <div class="footer">© 2024 خمن اللاعب</div>
+    <div id="start">
+      <button class="btn" onclick="startNormalGame()">ابدأ اللعب</button>
+      <button class="btn daily" onclick="startDailyChallenge()">التحدي اليومي</button>
+      <button class="btn premium" onclick="openShop()">المتجر</button>
+      <button class="btn" onclick="showAchievements()">الإنجازات</button>
     </div>
 
-    <!-- شاشة اللعب -->
-    <div id="game-screen" class="screen">
-        <div class="game-header">
-            <button onclick="goBack()" class="back-btn">🔙</button>
-            <div class="level-info">المستوى <span id="current-level">1</span>/<span id="total-levels">10</span></div>
-            <div class="score-info">🏆 <span id="current-score">0</span></div>
-        </div>
-
-        <div class="timer-container">
-            <div class="timer-bar" id="timer-bar"></div>
-            <div class="timer-text" id="timer-text">15</div>
-        </div>
-
-        <div class="player-image-container">
-            <div id="player-image" class="player-image"></div>
-            <button onclick="useHint()" class="hint-btn" id="hint-btn">💡 تلميح</button>
-        </div>
-
-        <div class="hint-display" id="hint-display"></div>
-        <div class="options-container" id="options-container"></div>
-        <div class="streak-counter">🔥 السلسلة: <span id="streak-count">0</span></div>
+    <div id="play" class="hidden">
+      <div id="question" style="font-size:1.8rem;margin:40px 0;line-height:1.7"></div>
+      <div id="choices"></div>
+      <button class="btn premium" onclick="useHint()">تلميح (-30 عملة)</button>
+      <button class="btn" onclick="watchRewardAd()">شاهد إعلان = 50 عملة</button>
+      <div id="timer"><div id="timer-bar"></div></div>
+      <div id="feedback"></div>
     </div>
 
-    <!-- شاشة المستويات -->
-    <div id="levels-screen" class="screen">
-        <div class="game-header">
-            <button onclick="goBack()" class="back-btn">🔙</button>
-            <h2>المستويات</h2>
-        </div>
-        <div class="levels-grid" id="levels-grid"></div>
+    <div id="end" class="hidden">
+      <h2 style="font-size:3rem;color:#FFD700">مبروك يا ملك!</h2>
+      <div style="font-size:3.2rem;color:#FFD700;margin:30px">النقاط: <span id="finalScore">0</span></div>
+      <button class="btn" onclick="startNormalGame()">العب تاني</button>
     </div>
+  </div>
 
-    <!-- شاشة أفضل اللاعبين -->
-    <div id="leaderboard-screen" class="screen">
-        <div class="game-header">
-            <button onclick="goBack()" class="back-btn">🔙</button>
-            <h2>🏆 أفضل اللاعبين</h2>
-        </div>
-        <div class="leaderboard-list" id="leaderboard-list"></div>
-    </div>
-
-    <!-- شاشة الإعدادات -->
-    <div id="settings-screen" class="screen">
-        <div class="game-header">
-            <button onclick="goBack()" class="back-btn">🔙</button>
-            <h2>⚙️ الإعدادات</h2>
-        </div>
-        
-        <div class="settings-options">
-            <div class="setting-item">
-                <span>🔊 المؤثرات الصوتية</span>
-                <label class="switch">
-                    <input type="checkbox" id="sound-effect" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="setting-item">
-                <span>🌙 الوضع الليلي</span>
-                <label class="switch">
-                    <input type="checkbox" id="dark-mode">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <button onclick="resetProgress()" class="reset-btn">🔄 إعادة تعيين التقدم</button>
-            <div class="app-version">الإصدار 1.0.0</div>
-        </div>
-    </div>
-
-    <!-- شاشة النتيجة -->
-    <div id="result-screen" class="screen result-overlay">
-        <div class="result-card" id="result-card"></div>
-    </div>
-
-    <script src="script.js"></script>
+  <!-- ربط ملف الأسئلة والكود -->
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
