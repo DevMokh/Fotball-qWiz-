@@ -1,45 +1,54 @@
-* {
+/* ===== الصورة في الخلفية ===== */
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Cairo', sans-serif;
-}
-
-body {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    background-image: url('https://i.postimg.cc/qv3wwNk6/file-000000004fcc7246b73a2ec06a458058.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.game-container {
-    width: 400px;
-    height: 700px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
 }
 
-.screen {
+body::before {
+    content: '';
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.game-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+    height: 700px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== الشاشات ===== */
+.screen {
     width: 100%;
     height: 100%;
     padding: 20px;
     overflow-y: auto;
-    transition: transform 0.3s ease;
-}
-
-.screen.active {
-    transform: translateX(0);
+    transition: opacity 0.3s ease;
 }
 
 .screen.hidden {
-    transform: translateX(100%);
+    display: none;
 }
 
 /* ===== شاشة البداية ===== */
@@ -47,7 +56,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .icon-btn {
@@ -55,43 +64,44 @@ body {
     height: 45px;
     border: none;
     border-radius: 50%;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     font-size: 1.2rem;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .stats {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 .stat {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     padding: 8px 15px;
     border-radius: 20px;
+    color: white;
     font-weight: 600;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.logo-area {
+.logo {
     text-align: center;
     margin: 20px 0;
 }
 
-.logo {
+.logo img {
     width: 200px;
 }
 
-.level-area {
+.level-box {
     text-align: center;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .level-badge {
-    background: gold;
-    color: #1e3c72;
+    background: #F7B733;
+    color: #141E30;
     display: inline-block;
     padding: 8px 30px;
     border-radius: 30px;
@@ -102,7 +112,7 @@ body {
 .xp-bar {
     width: 80%;
     height: 8px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     margin: 0 auto;
     overflow: hidden;
@@ -110,7 +120,7 @@ body {
 
 .xp-fill {
     height: 100%;
-    background: gold;
+    background: #F7B733;
     border-radius: 10px;
 }
 
@@ -119,12 +129,105 @@ body {
     padding: 18px;
     border: none;
     border-radius: 30px;
-    background: gold;
-    color: #1e3c72;
+    background: #F7B733;
+    color: #141E30;
     font-size: 1.5rem;
     font-weight: 800;
     cursor: pointer;
     margin-top: 30px;
+}
+
+/* ===== شاشة اختيار الوضع ===== */
+.screen-title {
+    color: white;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.mode-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.mode-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #F7B733;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.mode-card:hover {
+    background: #F7B733;
+    color: #141E30;
+}
+
+.mode-icon {
+    font-size: 2.5rem;
+}
+
+.mode-name {
+    font-weight: 600;
+}
+
+/* ===== شاشة اختيار الصعوبة ===== */
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.diff-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.diff-card.easy { border-color: #4CAF50; }
+.diff-card.medium { border-color: #FF9800; }
+.diff-card.hard { border-color: #f44336; }
+.diff-card.expert { border-color: #9C27B0; }
+.diff-card.legend { border-color: #F7B733; }
+
+.diff-card:hover {
+    background: currentColor;
+    color: #141E30;
+}
+
+.diff-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.diff-desc {
+    font-size: 0.8rem;
+    opacity: 0.8;
 }
 
 /* ===== شاشة اللعب ===== */
@@ -132,128 +235,96 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-.back-btn {
-    padding: 8px 15px;
+.game-back {
+    background: none;
     border: none;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.2);
     color: white;
+    font-size: 1.2rem;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.3);
 }
 
 .game-stats {
     display: flex;
     gap: 15px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     padding: 8px 15px;
     border-radius: 30px;
 }
 
-/* ===== لوحة الخيارات ===== */
-.options-panel {
-    background: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.option-group {
-    margin-bottom: 20px;
-}
-
-.option-group h3 {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 10px;
-}
-
-.option-buttons {
+.stat-item {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.option-btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.2);
+    align-items: center;
+    gap: 5px;
     color: white;
-    cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.3);
-    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-.option-btn.active {
-    background: gold;
-    color: #1e3c72;
-}
-
-.option-btn.small {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-}
-
-.gift-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(135deg, gold, orange);
-    color: #1e3c72;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-/* ===== مؤقت ===== */
-.timer-container {
-    height: 6px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 10px;
+/* ===== المؤقت ===== */
+.timer-box {
     margin: 15px 0;
+}
+
+.timer-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     overflow: hidden;
 }
 
-.timer-bar {
+.timer-fill {
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, gold, red);
+    background: linear-gradient(90deg, #F7B733, #f44336);
+    border-radius: 10px;
+    transition: width 0.1s linear;
 }
 
 .challenge-timer {
     text-align: center;
+    color: #F7B733;
     font-size: 1.3rem;
     margin: 10px 0;
-    color: gold;
 }
 
-/* ===== معلومات ===== */
-.info-box {
-    background: rgba(255,255,255,0.2);
-    padding: 20px;
+/* ===== لاعب معلومات ===== */
+.player-level-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.info-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #F7B733;
     border-radius: 20px;
+    padding: 20px;
     min-height: 100px;
     margin: 15px 0;
+    color: white;
     line-height: 1.6;
 }
 
 .next-btn {
     width: 100%;
-    padding: 10px;
-    border: 2px solid gold;
-    border-radius: 30px;
+    padding: 12px;
     background: transparent;
-    color: gold;
+    border: 2px solid #F7B733;
+    color: #F7B733;
+    border-radius: 30px;
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 15px;
 }
 
-/* ===== أزرار الاختيار ===== */
+/* ===== أزرار الإجابة ===== */
 .choices-area {
     display: flex;
     flex-direction: column;
@@ -264,53 +335,75 @@ body {
 }
 
 .choice-btn {
+    width: 100%;
     padding: 15px;
-    border: 2px solid gold;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #F7B733;
     border-radius: 15px;
-    background: rgba(255,255,255,0.1);
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
     text-align: right;
 }
 
+.choice-btn:hover {
+    background: #F7B733;
+    color: #141E30;
+}
+
 /* ===== Power-ups ===== */
-.powerups-area {
+.powerups-row {
     display: flex;
     justify-content: space-between;
     gap: 5px;
     margin: 15px 0;
 }
 
-.powerup {
+.powerup-item {
     flex: 1;
-    padding: 8px 5px;
-    border: 2px solid gold;
-    border-radius: 30px;
-    background: transparent;
-    color: gold;
-    font-size: 0.8rem;
-    font-weight: 600;
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
+    gap: 3px;
 }
 
-.powerup span {
-    font-size: 0.6rem;
-    color: white;
+.powerup-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid #F7B733;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #F7B733;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.powerup-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.powerup-cost {
+    color: #F7B733;
+    font-size: 0.7rem;
 }
 
 /* ===== شاشة النهاية ===== */
 .final-stats {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 20px;
-    margin: 30px 0;
+    margin: 20px 0;
+    color: white;
 }
 
-.final-stats p {
+.final-stat {
+    display: flex;
+    justify-content: space-between;
     margin: 10px 0;
     font-size: 1.2rem;
 }
@@ -318,21 +411,22 @@ body {
 .end-buttons {
     display: flex;
     gap: 10px;
+    margin-top: 30px;
 }
 
-.action-btn {
+.end-btn {
     flex: 1;
     padding: 15px;
     border: none;
     border-radius: 30px;
-    background: gold;
-    color: #1e3c72;
+    background: #F7B733;
+    color: #141E30;
     font-weight: 700;
     cursor: pointer;
 }
 
-.action-btn.secondary {
-    background: rgba(255,255,255,0.2);
+.end-btn.secondary {
+    background: rgba(255, 255, 255, 0.2);
     color: white;
 }
 
@@ -343,7 +437,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -354,19 +448,19 @@ body {
     display: none;
 }
 
-.overlay h2 {
+.overlay-text {
     font-size: 3rem;
-    color: gold;
+    color: #F7B733;
 }
 
-/* ===== Modal ===== */
+/* ===== Modals ===== */
 .modal {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -380,12 +474,13 @@ body {
 .modal-content {
     width: 90%;
     max-width: 350px;
-    background: #2a5298;
+    background: #243B55;
     border-radius: 30px;
     padding: 20px;
+    color: white;
 }
 
-.modal-content h3 {
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -393,22 +488,21 @@ body {
 }
 
 .close-btn {
-    width: 30px;
-    height: 30px;
+    background: none;
     border: none;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
     color: white;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
-.setting {
+.setting-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
 }
 
+/* Toggle Switch */
 .switch {
     position: relative;
     display: inline-block;
@@ -429,7 +523,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 34px;
 }
 
@@ -447,27 +541,34 @@ body {
 
 input:checked + .slider:before {
     transform: translateX(24px);
-    background: gold;
+    background: #F7B733;
 }
 
 .reset-btn {
     width: 100%;
     padding: 12px;
-    border: none;
+    border: 1px solid #f44336;
     border-radius: 20px;
-    background: rgba(244,67,54,0.2);
+    background: rgba(244, 67, 54, 0.1);
     color: #f44336;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 20px;
 }
 
-.leaderboard-list {
-    list-style: none;
+/* ===== إضافات ===== */
+.hidden {
+    display: none !important;
 }
 
-.leaderboard-list li {
-    padding: 8px;
-    margin: 5px 0;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
+.gift-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #F7B733, #FFA500);
+    border: none;
+    border-radius: 30px;
+    color: #141E30;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
 }
