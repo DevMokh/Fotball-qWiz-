@@ -61,7 +61,7 @@ body {
     height: 4px;
     background: rgba(255,255,255,0.3);
     border-radius: 2px;
-    margin-top: 20px;
+    margin: 20px auto;
     overflow: hidden;
 }
 
@@ -110,7 +110,6 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: transform 0.2s;
     width: 100%;
     justify-content: center;
 }
@@ -119,30 +118,10 @@ body {
     transform: scale(0.98);
 }
 
-.play-btn {
-    background: #4CAF50;
-    color: white;
-}
-
-.levels-btn {
-    background: #FF9800;
-    color: white;
-}
-
-.leaderboard-btn {
-    background: #9C27B0;
-    color: white;
-}
-
-.settings-btn {
-    background: #607D8B;
-    color: white;
-}
-
-.achievements-btn {
-    background: #FF6B6B;
-    color: white;
-}
+.play-btn { background: #4CAF50; color: white; }
+.levels-btn { background: #FF9800; color: white; }
+.leaderboard-btn { background: #9C27B0; color: white; }
+.settings-btn { background: #607D8B; color: white; }
 
 /* شاشة اللعب */
 .game-header {
@@ -161,10 +140,6 @@ body {
     font-size: 24px;
     cursor: pointer;
     padding: 5px 10px;
-}
-
-.back-btn:active {
-    background: rgba(255,255,255,0.2);
 }
 
 .timer-container {
@@ -204,18 +179,12 @@ body {
     margin: 0 auto;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     background-color: #ddd;
     transition: filter 0.5s;
 }
 
-#player-image.blurred {
-    filter: blur(10px);
-}
-
-#player-image.revealed {
-    filter: blur(0);
-}
+#player-image.blurred { filter: blur(10px); }
+#player-image.revealed { filter: blur(0); }
 
 .hint-btn {
     background: #FFC107;
@@ -229,16 +198,6 @@ body {
     margin-top: 15px;
 }
 
-.hint-btn:active {
-    transform: scale(0.95);
-    background: #FFA000;
-}
-
-.hint-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
-
 .hint-display {
     padding: 15px;
     margin: 10px;
@@ -246,8 +205,6 @@ body {
     border-radius: 10px;
     text-align: center;
     min-height: 60px;
-    font-size: 18px;
-    color: #333;
 }
 
 .options-container {
@@ -265,27 +222,11 @@ body {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
-.option-btn:active:not(:disabled) {
-    transform: scale(0.95);
-}
-
-.option-btn.correct {
-    background: #4CAF50;
-    color: white;
-}
-
-.option-btn.wrong {
-    background: #f44336;
-    color: white;
-}
-
-.option-btn.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+.option-btn.correct { background: #4CAF50; color: white; }
+.option-btn.wrong { background: #f44336; color: white; }
+.option-btn.disabled { opacity: 0.6; cursor: not-allowed; }
 
 .streak-counter {
     text-align: center;
@@ -314,99 +255,12 @@ body {
     cursor: pointer;
 }
 
-.level-item:active:not(.locked) {
-    transform: scale(0.95);
-}
-
-.level-item.locked {
-    background: rgba(255,255,255,0.3);
-    color: #999;
-    cursor: not-allowed;
-}
-
-.level-item.completed {
-    background: #4CAF50;
-    color: white;
-}
-
-.level-item.current {
-    background: #FF9800;
-    color: white;
-    border: 3px solid white;
-}
-
-.level-stars {
-    color: gold;
-    font-size: 12px;
-}
-
-/* شاشة الإنجازات */
-.achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 20px;
-}
-
-.achievement-item {
-    background: rgba(255,255,255,0.9);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-}
-
-.achievement-item.locked {
-    opacity: 0.5;
-    filter: grayscale(1);
-}
-
-.achievement-item.unlocked {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: white;
-}
-
-.achievement-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.achievement-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.achievement-desc {
-    font-size: 12px;
-    opacity: 0.8;
-}
-
-.achievement-progress {
-    margin-top: 10px;
-    height: 5px;
-    background: rgba(0,0,0,0.1);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #4CAF50;
-    transition: width 0.3s;
-}
-
-.achievement-badge {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    font-size: 20px;
-}
+.level-item.locked { background: rgba(255,255,255,0.3); color: #999; cursor: not-allowed; }
+.level-item.completed { background: #4CAF50; color: white; }
+.level-item.current { background: #FF9800; color: white; border: 3px solid white; }
 
 /* شاشة أفضل اللاعبين */
-.leaderboard-list {
-    padding: 20px;
-}
+.leaderboard-list { padding: 20px; }
 
 .leaderboard-item {
     background: rgba(255,255,255,0.9);
@@ -419,9 +273,7 @@ body {
 }
 
 /* شاشة الإعدادات */
-.settings-options {
-    padding: 20px;
-}
+.settings-options { padding: 20px; }
 
 .setting-item {
     background: rgba(255,255,255,0.9);
@@ -440,11 +292,7 @@ body {
     height: 34px;
 }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
+.switch input { opacity: 0; width: 0; height: 0; }
 
 .slider {
     position: absolute;
@@ -470,13 +318,8 @@ body {
     border-radius: 50%;
 }
 
-input:checked + .slider {
-    background-color: #4CAF50;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
+input:checked + .slider { background-color: #4CAF50; }
+input:checked + .slider:before { transform: translateX(26px); }
 
 .reset-btn {
     background: #f44336;
@@ -498,7 +341,7 @@ input:checked + .slider:before {
     opacity: 0.8;
 }
 
-/* شاشات النتائج */
+/* شاشة النتيجة */
 .result-overlay {
     background: rgba(0,0,0,0.8);
     display: flex;
@@ -521,30 +364,12 @@ input:checked + .slider:before {
     to { transform: scale(1); opacity: 1; }
 }
 
-.result-card.correct {
-    border-top: 5px solid #4CAF50;
-}
+.result-card.correct { border-top: 5px solid #4CAF50; }
+.result-card.wrong { border-top: 5px solid #f44336; }
 
-.result-card.wrong {
-    border-top: 5px solid #f44336;
-}
-
-.result-icon {
-    font-size: 60px;
-    margin-bottom: 15px;
-}
-
-.result-message {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.result-points {
-    font-size: 20px;
-    color: #FF9800;
-    margin-bottom: 20px;
-}
+.result-icon { font-size: 60px; margin-bottom: 15px; }
+.result-message { font-size: 24px; margin-bottom: 10px; color: #333; }
+.result-points { font-size: 20px; color: #FF9800; margin-bottom: 20px; }
 
 .result-next-btn {
     background: #4CAF50;
@@ -555,77 +380,19 @@ input:checked + .slider:before {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 15px;
-}
-
-.new-achievement {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: white;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    z-index: 2000;
-    animation: slideIn 0.5s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-@keyframes slideIn {
-    from { transform: translate(-50%, -30%); opacity: 0; }
-    to { transform: translate(-50%, -50%); opacity: 1; }
 }
 
 @media (max-width: 480px) {
-    .menu-btn {
-        padding: 15px;
-        font-size: 18px;
-    }
-    
-    .levels-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    #player-image {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .options-container {
-        grid-template-columns: 1fr;
-    }
+    #player-image { width: 150px; height: 150px; }
+    .options-container { grid-template-columns: 1fr; }
+    .levels-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 .hint {
     padding: 10px;
-    margin: 5px;
     background: #e3f2fd;
     border-radius: 10px;
     border-right: 4px solid #2196F3;
-}
-
-.bonus-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: gold;
-    color: #333;
-    padding: 20px 40px;
-    border-radius: 50px;
-    font-size: 24px;
-    font-weight: bold;
-    z-index: 2000;
-    animation: bonusPop 1s ease-out;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-@keyframes bonusPop {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
 .footer {
@@ -636,24 +403,4 @@ input:checked + .slider:before {
     text-align: center;
     color: rgba(255,255,255,0.5);
     font-size: 12px;
-}
-
-.share-btn {
-    background: #25D366;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.share-btn:active {
-    transform: scale(0.95);
 }
