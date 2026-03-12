@@ -14,7 +14,6 @@ body {
     direction: rtl;
 }
 
-/* الشاشات */
 .screen {
     position: fixed;
     top: 0;
@@ -91,9 +90,6 @@ body {
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 18px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
 }
 
 .menu-buttons {
@@ -121,10 +117,6 @@ body {
 
 .menu-btn:active {
     transform: scale(0.98);
-}
-
-.menu-btn span {
-    font-size: 24px;
 }
 
 .play-btn {
@@ -169,16 +161,10 @@ body {
     font-size: 24px;
     cursor: pointer;
     padding: 5px 10px;
-    border-radius: 50%;
 }
 
 .back-btn:active {
     background: rgba(255,255,255,0.2);
-}
-
-.level-info, .score-info {
-    font-size: 16px;
-    font-weight: bold;
 }
 
 .timer-container {
@@ -208,7 +194,6 @@ body {
 .player-image-container {
     text-align: center;
     padding: 20px;
-    position: relative;
 }
 
 #player-image {
@@ -242,7 +227,6 @@ body {
     font-weight: bold;
     cursor: pointer;
     margin-top: 15px;
-    transition: all 0.2s;
 }
 
 .hint-btn:active {
@@ -253,7 +237,6 @@ body {
 .hint-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
-    opacity: 0.6;
 }
 
 .hint-display {
@@ -264,7 +247,6 @@ body {
     text-align: center;
     min-height: 60px;
     font-size: 18px;
-    font-weight: bold;
     color: #333;
 }
 
@@ -310,7 +292,6 @@ body {
     padding: 10px;
     color: white;
     font-size: 18px;
-    font-weight: bold;
 }
 
 /* شاشة المستويات */
@@ -331,7 +312,6 @@ body {
     align-items: center;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .level-item:active:not(.locked) {
@@ -358,7 +338,6 @@ body {
 .level-stars {
     color: gold;
     font-size: 12px;
-    margin-top: 5px;
 }
 
 /* شاشة الإنجازات */
@@ -374,9 +353,7 @@ body {
     border-radius: 15px;
     padding: 15px;
     text-align: center;
-    transition: all 0.3s;
     position: relative;
-    overflow: hidden;
 }
 
 .achievement-item.locked {
@@ -439,22 +416,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.leaderboard-rank {
-    font-size: 20px;
-    font-weight: bold;
-    color: #4CAF50;
-}
-
-.leaderboard-name {
-    font-size: 18px;
-}
-
-.leaderboard-score {
-    font-size: 18px;
-    font-weight: bold;
-    color: #FF9800;
 }
 
 /* شاشة الإعدادات */
@@ -530,11 +491,6 @@ input:checked + .slider:before {
     margin-top: 20px;
 }
 
-.reset-btn:active {
-    transform: scale(0.98);
-    background: #d32f2f;
-}
-
 .app-version {
     text-align: center;
     color: white;
@@ -602,11 +558,6 @@ input:checked + .slider:before {
     margin-top: 15px;
 }
 
-.result-next-btn:active {
-    transform: scale(0.95);
-    background: #45a049;
-}
-
 .new-achievement {
     position: fixed;
     top: 50%;
@@ -645,10 +596,6 @@ input:checked + .slider:before {
     .options-container {
         grid-template-columns: 1fr;
     }
-
-    .achievements-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .hint {
@@ -673,7 +620,6 @@ input:checked + .slider:before {
     z-index: 2000;
     animation: bonusPop 1s ease-out;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    text-align: center;
 }
 
 @keyframes bonusPop {
